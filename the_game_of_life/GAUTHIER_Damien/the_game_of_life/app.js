@@ -85,11 +85,11 @@ tabCellule[401].draw();
 tabCellule[402].draw();
 tabCellule[403].draw();
 
-for (var i = 0; i < 5; i++) {
+/*for (var i = 0; i < 5; i++) {
 	tabCellule[540 + i].draw();
 	tabCellule[630 + i].draw();
 	tabCellule[670 + i].draw();
-}
+}*/
 
 step();
 

@@ -24,8 +24,17 @@ Cellule.prototype.born = function() {
 
 Cellule.prototype.countingNeighbour = function() {
 	var countNeighbour = 0;
-	var celIndex = tabCellule.indexOf(this);
+//from Bastien CODE
+	for (var x = -1; x < 2; x++) {
+			for (var y = -1; y < 2; y++) {
+				var cell = tabCellule.find(c => c.x == this.x + x && c.y == this.y + y);
+				if (cell && cell.isActive && cell != this) {
+					countNeighbour++;
+				}
+			}
+		}
 
+/*
 	// top
 	var indexElementTop = ( this.y - 1 ) * 40 + this.x;
 	if (tabCellule[indexElementTop] 
@@ -41,8 +50,8 @@ Cellule.prototype.countingNeighbour = function() {
 		) {
 		countNeighbour++;
 	}
-
-	if (!(this.x == 40)) {
+//check if this is not last of line
+	if (!(this.x == 39)) {
 		// right
 		var indexElementRight = this.y * 40 + this.x + 1;
 		if (tabCellule[indexElementRight] 
@@ -65,7 +74,7 @@ Cellule.prototype.countingNeighbour = function() {
 			countNeighbour++;
 		}
 	}
-
+//check if this is not first of line
 	if (!(this.x == 0)) {
 		// left
 		var indexElementLeft = this.y * 40 + this.x - 1;
@@ -76,7 +85,7 @@ Cellule.prototype.countingNeighbour = function() {
 		}
 		//TOP/LEFT
 		var indexElementTopLeft = (this.y - 1) * 40 + this.x - 1;
-		if (tabCellule[indexElementTopLeft] 
+		if (tabCellule[indexElementTopLeft]
 			&& tabCellule[indexElementTopLeft].isActive
 			) {
 			countNeighbour++;
@@ -88,7 +97,8 @@ Cellule.prototype.countingNeighbour = function() {
 			) {
 			countNeighbour++;
 		}
-	}	
+	}
+	*/
 
 	return countNeighbour;
 };
