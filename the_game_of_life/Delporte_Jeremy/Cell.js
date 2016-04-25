@@ -28,30 +28,30 @@ Cell.prototype.checkNeighborhood = function(){
 
 	var neighborCount = 0;
 	var index = cells.indexOf(this);
-	debugger;
-	if (cells[index+1].itsAlive){
+	// debugger;
+	if (cells[index+1].itsAlive && this.posY == cells[index + 1].posY){
 		neighborCount ++;
 		console.log("droite");
 	};
-	if (cells[index-1].itsAlive){
+	if (cells[index-1].itsAlive && this.posY == cells[index - 1].posY){
 		neighborCount ++;
 	};
-	if (cells[index+ nbrCol].itsAlive){
+	if (cells[index+ nbrCol].itsAlive && this.posY == cells[index + nbrCol].posY){
 		neighborCount ++;
 	};
-	if (cells[index-nbrCol].itsAlive){
+	if (cells[index-nbrCol].itsAlive && this.posY == cells[index - nbrCol].posY){
 		neighborCount ++;
 	};
-	if (cells[index+nbrCol+1].itsAlive){
+	if (cells[index+nbrCol+1].itsAlive && this.posY == cells[index + nbrCol + 1].posY){
 		neighborCount ++;
 	};
-	if (cells[index-nbrCol+1].itsAlive){
+	if (cells[index-nbrCol+1].itsAlive && this.posY == cells[index - nbrCol + 1].posY){
 		neighborCount ++;
 	};
-	if (cells[index+nbrCol-1].itsAlive){
+	if (cells[index+nbrCol-1].itsAlive && this.posY == cells[index + nbrCol - 1].posY){
 		neighborCount ++;
 	};
-	if (cells[index-nbrCol-1].itsAlive){
+	if (cells[index-nbrCol-1].itsAlive && this.posY == cells[index - nbrCol - 1].posY){
 		neighborCount ++;
 	};
 
