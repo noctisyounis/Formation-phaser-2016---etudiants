@@ -1,0 +1,23 @@
+.row {
+	float:left;
+	margin : 0 40px;
+}
+
+.col1{
+	width:100%;
+}
+
+.col2{
+	width:50%;
+}
+
+.btn {
+	margin:5px;
+	display: inline-block;
+	width : 50px;
+	line-height: 25px;
+	height: 25px;
+	border : 2px solid;
+	border-radius: 5px;
+	text-align: center;
+}
