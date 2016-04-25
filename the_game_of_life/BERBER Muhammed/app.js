@@ -2,13 +2,16 @@ var canvas 		= document.getElementById("monCanvas");
 var wW = canvas.width 	= 800;
 var wH = canvas.height 	= 800;
 var context = canvas.getContext('2d');
-var cellSize = 20;
+var cellSize = 50;
 
 var cells = [];
 
+var fps     = 2;
+var COLUMN 	= 11;
+var ROWS	= COLUMN;
 
-var COLUMN 	= 5;
-var ROWS	= 5;
+
+var lecture = false;
 
 
 function drawGrid(){
@@ -21,9 +24,7 @@ function drawGrid(){
 	}
 }
 
-
-
-var cell = function(x,y){
+var Cell = function(x,y){
 	var _self 		= this;
 	_self.x 		= x;
 	_self.y 		= y;
@@ -94,14 +95,32 @@ var cell = function(x,y){
 		}
 	}
 	_self.draw = function(){
-		_self.isAlive = _self.willBeAlive;
-		context.beginPath();
-		context.rect(_self.x,_self.y,cellSize,cellSize);
-		if(_self.isAlive){
-			context.fill();
-		}else{
-			context.stroke();
-		}
+        /*
+        si vivant
+            - si vivant au suivant -> vert
+            - sinon rouge
+        si mort
+            - si vivant au prochain - > gris
+            - sinon blancs
+        */
+        if (_self.isAlive) {
+            if (_self.willBeAlive){
+                context.fillStyle = "green";
+            }else{
+                context.fillStyle = "red";
+            }
+        }else{
+            if(_self.willBeAlive){
+                context.fillStyle = "gray";
+            }else{
+                context.fillStyle = "white";
+            }
+        }
+        _self.isAlive = _self.willBeAlive;
+        context.beginPath();
+        context.rect(_self.x,_self.y,cellSize,cellSize);
+        context.fill();
+        context.stroke();
 	}
 }
 
@@ -109,42 +128,83 @@ var cell = function(x,y){
 
 
 init();
-
-/*	for(var idx in cells){
-		cells[idx].draw();
-	}*/
-animate();
+/*cells[60].isAlive = true;
+cells[60].willBeAlive = true;
+cells[61].isAlive = true;
+cells[61].willBeAlive = true;
+cells[49].isAlive = true;
+cells[49].willBeAlive = true;
+cells[50].isAlive = true;
+cells[50].willBeAlive = true;*/
+//checkCell();
+drawCell();
+//animate();
 
 
 
 function animate(){
-	
-	//drawCell();
-	for(var idx in cells){
-		cells[idx].check();
-	}
-	for(var idx in cells){
-		cells[idx].draw();
-	}
-	window.requestAnimationFrame(animate);
+    setTimeout(function() {
+        window.requestAnimationFrame(animate);
+        if(lecture){
+            checkCell();
+            drawCell();
+        }
+    }, 1000 / fps);
 }
 
 function init(){
 	for (var x = 0; x < COLUMN; x++) {
 		for (var y = 0; y < ROWS; y++) {
-			cells.push(new cell(x*cellSize,y*cellSize));
+			cells.push(new Cell(x*cellSize,y*cellSize));
 		}
 	}
-	cells[12].isAlive = true;
-	cells[12].willBeAlive = true;
-	//drawGrid();
-
 }
 
-console.log(cells);
-
-/*function drawCell(){
+function checkCell(){
+    for(var idx in cells){
+        cells[idx].check();
+    }
+}
+function drawCell(){
 	for(var idx in cells){
-		cells[idx].check();
+		cells[idx].draw();
 	}
-}*/
+}
+
+
+
+function drawCube(event){
+    var clickX = event.offsetX / cellSize;
+    var clickY = event.offsetY / cellSize;
+    var x = Math.floor(clickX);
+    var y = Math.floor(clickY);
+
+    for(var i = 0 ;  i < cells.length ; i++){
+        var cell = cells[i];
+        if(x*cellSize == cell.x && y*cellSize == cell.y){
+            cell.isAlive = true;
+            cell.willBeAlive = true;
+            cell.draw();
+        }
+    }
+}
+
+
+
+function startDrawing(){
+    lecture = true;
+    animate();
+}
+function stopDrawing(){
+    lecture = false;
+}
+
+
+/* HANDLER */
+canvas.addEventListener('click',drawCube);
+
+
+var btnStart = document.getElementById('start');
+var btnStop = document.getElementById('stop');
+btnStop.addEventListener('click',stopDrawing);
+btnStart.addEventListener('click',startDrawing);
