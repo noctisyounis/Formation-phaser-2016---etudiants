@@ -25,16 +25,16 @@ Cellule.prototype.born = function() {
 Cellule.prototype.countingNeighbour = function() {
 	var countNeighbour = 0;
 //from Bastien CODE
-/*
 	for (var x = -1; x < 2; x++) {
 			for (var y = -1; y < 2; y++) {
 				var cell = tabCellule.find(c => c.x == this.x + x && c.y == this.y + y);
-				if (cell != undefined && cell.isActive && cell != this) {
+				if (cell && cell.isActive && cell != this) {
 					countNeighbour++;
 				}
 			}
 		}
-*/
+
+/*
 	// top
 	var indexElementTop = ( this.y - 1 ) * 40 + this.x;
 	if (tabCellule[indexElementTop] 
@@ -98,6 +98,7 @@ Cellule.prototype.countingNeighbour = function() {
 			countNeighbour++;
 		}
 	}
+	*/
 
 	return countNeighbour;
 };
