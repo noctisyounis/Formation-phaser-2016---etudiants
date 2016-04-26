@@ -1,0 +1,7 @@
+canvas {
+	margin: 1em;
+	border: 1px solid;
+}
+button,select {
+	margin: 0 2em;
+}
