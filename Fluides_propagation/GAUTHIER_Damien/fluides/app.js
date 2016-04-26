@@ -46,40 +46,15 @@ for (var i = 0; i < tabCellule.length; i++) {
 }
 
 
-//test obstacle
-var obstacle1 = new Obstacle();
-var obstacle2 = new Obstacle();
-var obstacle3 = new Obstacle();
-
-obstacle1.init(0,9);
-obstacle2.init(5,5);
-obstacle3.init(3,7);
-
-obstacle1.draw();
-obstacle2.draw();
-obstacle3.draw();
-
-tabCellule[obstacle1.y * nbColumn + obstacle1.x] = obstacle1;
-tabCellule[obstacle2.y * nbColumn + obstacle2.x] = obstacle2;
-tabCellule[obstacle3.y * nbColumn + obstacle3.x] = obstacle3;
-
-//test Water
-/*var water1 = new Water();
-water1.init(6,5);
-water1.isActive = true;
-water1.draw();
-tabCellule[water1.y * nbColumn + water1.x] = water1;*/
-
-
-/* *** pseudo code ***
-
-	parcourir chaque case de la grille
-	si c'est un bloc d'eau: 
-		verifier les voisins dans les quatres axes
-		si ce n'est pas un obstacle ou un bloc d'eau, changer son etat en "eau"
-		continuer ... 
-		(faire attention a ne pas verifier les blocs d'eau qui ne sont pas propager, boucle infinie aie aie aie ... )
-*/
+// create 10 obstacles (random)
+for (var i = 0; i < 10; i++) {
+	var tmpObstacle = new Obstacle();
+	var x = (Math.random()*10)|0;
+	var y = (Math.random()*10)|0
+	tmpObstacle.init(x,y);
+	tmpObstacle.draw();
+	tabCellule[y * nbColumn + x] = tmpObstacle;
+}
 
 function evolution(){
 	for (var i = 0; i < tabCellule.length; i++) {
@@ -111,18 +86,19 @@ function step(){
 
 step();
 
-function createWater(e){
-	console.log(e);
-	console.log((e.clientX/celluleWith));
-	console.log((e.clientY/celluleHeight));
-	var waterOnClick = new Water();
-	waterOnClick.init((e.clientX/celluleWith)|0, (e.clientY/celluleHeight)|0,false);
-	waterOnClick.isActive = true;
-	waterOnClick.draw();
-	tabCellule[waterOnClick.y * nbColumn + waterOnClick.x] = waterOnClick;
+function createWaterOnClick(e){
+	var x = (e.clientX/celluleWith)|0;
+	var y = (e.clientY/celluleHeight)|0;
+	if (tabCellule[y * nbColumn + x].name == "Vide") {
+		var waterOnClick = new Water();
+		waterOnClick.init(x, y, false);
+		waterOnClick.isActive = true;
+		waterOnClick.draw();
+		tabCellule[waterOnClick.y * nbColumn + waterOnClick.x] = waterOnClick;
+	}
 	
 }
 
 window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
                               window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
-window.addEventListener("click", createWater);
+window.addEventListener("click", createWaterOnClick);
