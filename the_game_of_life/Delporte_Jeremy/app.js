@@ -79,14 +79,8 @@ for (var i = 0; i < w; i += cellSize) {
 	}
 }
 
-cells[500].itsAlive = true;
-cells[460].itsAlive = true;
-cells[600].itsAlive = true;
-cells[50].itsAlive = true;
-cells[460].itsAlive = true;
-cells[0].itsAlive = true;
-cells[501].itsAlive = true;
-cells[599].itsAlive = true;
+cells[159].itsAlive = true;
+cells[160].itsAlive = true;
 console.log(cells);
 
 var checkLive = function(){
@@ -101,8 +95,3 @@ var checkLive = function(){
 }
 
 checkLive();
-cells[500].destiny();
-cells[501].destiny();
-cells[0].destiny();
-cells[700].destiny();
-cells[600].destiny();

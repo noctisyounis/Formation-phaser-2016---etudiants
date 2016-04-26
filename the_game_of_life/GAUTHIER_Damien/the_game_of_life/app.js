@@ -6,7 +6,7 @@ var canvas = document.querySelector("#canvas");
 
 // set the context
 var context = canvas.getContext("2d");
-// create grille
+// create grid
 for (var i = 0; i < 400; i = i + 10) {
 	context.beginPath();
 	context.moveTo(i, 0);
@@ -32,26 +32,25 @@ var tabCellule = new Array(1600);
 var nbColumn = 40;
 var timestamp = 0;
 
-// remplir le tab d'objet !!!
+// fill tab
 for (var i = 0; i < tabCellule.length; i++) {
 	tabCellule[i] = new Cellule();
-	// set x et y
+	// set x and y
 	tabCellule[i].x = i % nbColumn;
 	tabCellule[i].y = (i - tabCellule[i].x)/nbColumn;
 }
 
 function evolution(){
-	// foreach tabCellule, countingNeighbour -> kill||born
+//	foreach tabCellule, countingNeighbour -> kill||born
 	for (var i = 0; i < tabCellule.length; i++) {
 		var tmpCount = tabCellule[i].countingNeighbour();
-		//console.log(tmpCount);
-		//	cellule avec 4 ou + voisins meurt de surpopulation
+//	cellule with 4 or + neighbour die by overpopulation
 		if (tmpCount >= 4) {
 			tabCellule[i].survivedNextLevel = false;
-		//	chaque cellue avec 2 ou 3 voisins survi ou nait
+//	foreach cellule with 2 or 3 neighbour life or born	
 		} else if (tmpCount == 2 || tmpCount == 3) {
 			tabCellule[i].survivedNextLevel = true;
-		//	cel avec 1 ou 0 voisins meurs de solitude
+//	cellule with 1 or 0 neighbour die by solitude
 		} else {
 			tabCellule[i].survivedNextLevel = false;
 		}
@@ -66,7 +65,7 @@ function evolution(){
 }
 
 
-//try it
+//"Step" _ requestAnimationFrame
 function step(){
 	if (timestamp == 0) {
 		timestamp = 50;
@@ -78,34 +77,21 @@ function step(){
 	requestAnimationFrame(step);
 }
 
-//test 
-/*tabCellule[302].draw();
+//Draw Cellule for starter
+tabCellule[302].draw();
 tabCellule[399].draw();
 tabCellule[400].draw();
 tabCellule[401].draw();
 tabCellule[402].draw();
-tabCellule[403].draw();*/
+tabCellule[403].draw();
 
-for (var i = 0; i < 5; i++) {
-	//tabCellule[300 + i].draw();
+/*for (var i = 0; i < 5; i++) {
 	tabCellule[540 + i].draw();
 	tabCellule[630 + i].draw();
 	tabCellule[670 + i].draw();
-}
-/*
-console.log(tabCellule[302]);
-console.log(tabCellule[399]);
-console.log(tabCellule[400]);
-console.log(tabCellule[401]);
-console.log(tabCellule[402]);
-console.log(tabCellule[403]);*/
+}*/
 
-
-
-console.log("countingNeighbour 0 : " + tabCellule[0].countingNeighbour());
-console.log("countingNeighbour 632 : " + tabCellule[632].countingNeighbour());
 step();
-console.log("countingNeighbour 672 : " + tabCellule[672].countingNeighbour());
 
 window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
                               window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
