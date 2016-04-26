@@ -7,13 +7,14 @@ var cellSize = 50;
 var cells = [];
 
 var fps     		= 2,
-	COLUMN 			= 11,
-	ROWS			= 11,
+	COLUMN 			= 15,
+	ROWS			= COLUMN,
 	totalCellNumber = COLUMN * ROWS,
-	wallTileNbr 	= 30,
-	drownTileNbr 	= 3,
-	leftTileNbr 	= 5,
-	lecture 		= false;
+	wallTileNbr 	= 40,
+	drownTileNbr 	= 15,
+	leftTileNbr 	= 10,
+	lecture 		= false,
+	tileStyle		= "wall";
 
 /* recuperer des idnex random pour la grille  */
 var rndRange = function(min, max){ return Math.floor(min + (Math.random() * (max - min))); }
@@ -99,24 +100,26 @@ function init(){
 	}
 	for(var a = 0 ; a <= wallTileNbr ; a++ ){
 		var wallRngCell 	= rndRange(0,totalCellNumber);
-		var drownRngCell 	= rndRange(0,totalCellNumber);
-		var leftRngCell 	= rndRange(0,totalCellNumber);
-
 		cells[wallRngCell].isAWall = true;
 		cells[wallRngCell].isWater = false;
-
-		cells[drownRngCell].toDrown = true;
-		cells[drownRngCell].isWater = false;
-
-		cells[leftRngCell].toLeft 	= true;
-		cells[leftRngCell].isWater 	= false;
-
 		/* COMMENCE DANS UN COIN FORCE */
 		cells[0].isAWall 	= false;
 		cells[0].toDrown 	= false;
 		cells[0].toLeft 	= false;
 		cells[0].isWater 	= true;
 		cells[0].propagation = true;
+	}
+	for(var b = 0 ; b <= drownTileNbr ; b++ ){
+		var drownRngCell = rndRange(0,totalCellNumber);
+		cells[wallRngCell].isAWall = false;
+		cells[drownRngCell].toDrown = true;
+		cells[drownRngCell].isWater = false;
+	}
+	for(var c = 0 ; c <= leftTileNbr ; c++ ){
+		var leftRngCell 	= rndRange(0,totalCellNumber);
+		cells[wallRngCell].isAWall = false;
+		cells[leftRngCell].toLeft 	= true;
+		cells[leftRngCell].isWater 	= false;
 	}
 	drawCell();
 }
@@ -147,6 +150,22 @@ function drawWater(event){
     for(var i = 0 ;  i < cells.length ; i++){
         var cell = cells[i];
         if(x*cellSize == cell.x && y*cellSize == cell.y){
+
+        	/* GESTION DES TYPE DE TUILES */
+/*        	switch(tileStyle){
+        		case 'wall':
+	        		selectTile = cell.isAWall;
+        		break;
+        		case 'humain': //roleft
+        			selectTile = cell.toLeft;
+        		break;
+        		case 'trash': //toDrown
+        			selectTile = cell.toDrown;
+        		break;
+        		default:
+        			selectTile = cell.isAWall;
+        		break;
+        	}*/
         	if(cell.isAWall){/* ENLEVE LE MUR SELECTIONNE */
         		cell.isAWall = false;
         		cell.draw();
@@ -174,6 +193,13 @@ function stopDrawing(){
 }
 
 
+function selectList(event){
+	//console.log(event.target.value);
+	tileStyle = event.target.value;
+}
+
+
+
 /* HANDLER */
 canvas.addEventListener('click',drawWater);
 
@@ -182,3 +208,6 @@ var btnStart = document.getElementById('start');
 var btnStop = document.getElementById('stop');
 btnStop.addEventListener('click',stopDrawing);
 btnStart.addEventListener('click',startDrawing);
+
+var optionList = document.querySelector('select');
+optionList.addEventListener('change',selectList);
