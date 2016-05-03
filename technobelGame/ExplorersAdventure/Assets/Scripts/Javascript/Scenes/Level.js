@@ -80,7 +80,12 @@ function Level(lvlMap,lvlItems) {
 				
 			}
 			if (Application.Player == null) {
-				Application.Player = new Player(playerMapPos.x,playerMapPos.y,101,171)
+				Application.Player = new Player(playerMapPos.x,playerMapPos.y,101,171);
+				window.addEventListener('keydown',function(e) {
+					if (!e.repeat) {
+						Application.Player.moveEvent(e.keyCode);
+					}	
+				});
 			}
 			else {
 				Application.Player.Transform.mapPosition.x = playerMapPos.x;
@@ -89,11 +94,7 @@ function Level(lvlMap,lvlItems) {
 			
 			this.GameObjects.push(Application.Player);
 			
-			window.addEventListener('keydown',function(e) {
-				if (!e.repeat) {
-					Application.Player.moveEvent(e.keyCode);
-				}	
-			});
+			
 			this.started = true;
 			console.log('%c System:Scene ' + this.name + " Started !", 'background:#222; color:#bada55');
 			Time.SetTimeWhenSceneLoaded();
