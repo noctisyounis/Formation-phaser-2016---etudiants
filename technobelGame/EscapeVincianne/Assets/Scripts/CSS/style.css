@@ -1,0 +1,15 @@
+canvas{ 
+	width: 800px; 
+	height: 600px; 
+	background-image: url(../../Graphics/bg-clouds.png);
+	background-position: 0px 0px;
+	/*background-repeat: repeat-x;*/
+
+	animation: animatedBackground 40s linear infinite;
+}
+
+
+@keyframes animatedBackground {
+	from { background-position: 0 0; }
+	to { background-position: 100% 0; }
+}
