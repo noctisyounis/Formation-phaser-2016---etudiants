@@ -17,7 +17,8 @@ var colorsByType = {
 	rock : "#898989",
 	water : "#2512DB",
 	people : "#FB8FD6",
-	fire : "#FA0000",
+	fire : "#F3B521",
+	lava : "#FF0000",
 	key: function(n) {
         return this[Object.keys(this)[n]];
     }
