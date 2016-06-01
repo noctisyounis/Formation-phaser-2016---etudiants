@@ -1,0 +1,70 @@
+ <!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Technobel GameEngine</title>
+	<!-- <link rel="stylesheet" href="Assets/Scripts/CSS/reset.css"> -->
+	<link rel="stylesheet" href="Assets/Scripts/CSS/style.css">
+	<meta name="charset" content="utf-8">
+	<link rel="icon" href="Assets/Graphics/Logos/favicon.ico" />
+</head>
+<body>
+	<center>
+		<video style="display:none" id="video"  width="640" height="480" autoplay></video>
+		<canvas style="display:none" id="canvasCamera" width="640" height="480">Votre navigateur ne supporte pas le canvas dommage...</canvas>
+		<canvas id="canvasGame"  width="640" height="480">Votre navigateur ne supporte pas le canvas dommage...</canvas>
+		<!-- style="width: 1600px; height: 900px; " -->
+	</center>
+
+	<!-- Tools  -->
+	<script type="text/javascript" src="Assets/Scripts/Javascript/Tools/Log.js"></script>
+	<script type="text/javascript" src="Assets/Scripts/Javascript/Tools/Utils.js"></script>
+	<script type="text/javascript" src="Assets/Scripts/Javascript/Tools/Math.js"></script>
+	<script type="text/javascript" src="Assets/Scripts/Javascript/Tools/Random.js"></script>
+	<script type="text/javascript" src="Assets/Scripts/Javascript/Tools/Vector.js"></script>
+	<script type="text/javascript" src="Assets/Scripts/Javascript/Tools/Debug.js"></script>	
+	<script type="text/javascript" src="Assets/Scripts/Javascript/Tools/Input.js"></script>
+	<script type="text/javascript" src="Assets/Scripts/Javascript/Tools/Time.js"></script>
+	<script type="text/javascript" src="Assets/Scripts/Javascript/Tools/Tween.js"></script>
+	<script type="text/javascript" src="Assets/Scripts/Javascript/Tools/Physics.js"></script>
+	<script type="text/javascript" src="Assets/Scripts/Javascript/GFX/Gfx.js"></script>
+	<script type="text/javascript" src="Assets/Scripts/Javascript/Tools/LocalStorage.js"></script>
+	<script type="text/javascript" src="Assets/Scripts/Javascript/Tools/Dialogue.js"></script>
+	<script type="text/javascript" src="Assets/Scripts/Javascript/Tools/Grid.js"></script>
+	<script type="text/javascript" src="Assets/Scripts/Javascript/Tools/Timer.js"></script>
+	<script type="text/javascript" src="Assets/Scripts/Javascript/Tools/PathFinding.js"></script>
+	<script type="text/javascript" src="Assets/Scripts/Javascript/Tools/StateMachine.js"></script>
+	<script type="text/javascript" src="Assets/Scripts/Javascript/Tools/Laser.js"></script>
+
+	<!-- Config -->
+	<script type="text/javascript" src="Assets/Scripts/Javascript/Game/Config.js"></script>
+	
+	<!-- GameObjects -->
+	<script type="text/javascript" src="Assets/Scripts/Javascript/Gameobjects/SpaceShip.js"></script>
+	<script type="text/javascript" src="Assets/Scripts/Javascript/Gameobjects/Asteroid.js"></script>
+		
+
+
+
+	<!-- Groups -->
+	<script type="text/javascript" src="Assets/Scripts/Javascript/Groups/Group.js"></script>
+		
+	<!-- Particules -->
+	<script type="text/javascript" src="Assets/Scripts/Javascript/Particles/Kaboom.js"></script>
+	<script type="text/javascript" src="Assets/Scripts/Javascript/Particles/Emitter.js"></script>
+	<script type="text/javascript" src="Assets/Scripts/Javascript/Particles/Particle.js"></script>
+		
+	<!-- Scene -->
+	<script type="text/javascript" src="Assets/Scripts/Javascript/Scenes/SceneModel.js"></script>
+	<script type="text/javascript" src="Assets/Scripts/Javascript/Scenes/Loader.js"></script>
+	<script type="text/javascript" src="Assets/Scripts/Javascript/Scenes/OuterSpace.js"></script>
+	<script type="text/javascript" src="Assets/Scripts/Javascript/Scenes/GameOver.js"></script>
+		
+
+	<!-- Game  -->
+	<script type="text/javascript" src="Assets/Scripts/Javascript/Game/Game.js"></script>
+	<script type="text/javascript" src="Assets/Scripts/Javascript/Game/Init.js"></script>
+
+</body>
+</html>

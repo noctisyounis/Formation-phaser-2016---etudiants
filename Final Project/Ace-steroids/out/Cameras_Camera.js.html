@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Cameras/Camera.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Cameras/Camera.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Create a new Camera. &lt;br />
+ * Can have a dead zone, collide world bounds and follow an object
+ * 
+ * @class
+ * @param {string} _name - The cameras's name.
+ * @param {Vector} _position - The camera's position
+ * 
+ * @return {Camera} Camera - A new Camera
+ * */
+function Camera(_name, _position) 
+{
+	this.name = _name || "CameraModel";
+	this.started = false;
+	this.enabled = true;
+	this.gfxEnabled = false;
+
+	this.collideWorldBound = true;
+
+	this.isDeadZone = false;
+	this.ObjectToFollow = null;
+	this.Offsets = new Vector(canvas.width / 6, canvas.height / 6);
+
+	this.speed = 150;
+
+	this.Transform = {};
+	this.Transform.Position = _position || new Vector(0, 0);
+
+	/**
+	 * Awake the Camera and show a message in console
+	 * */
+	this.Awake = function() 
+	{
+		Print('System:Group ' + this.name + " Created !");
+	};
+	
+	/**
+	 * Start the Camera and show a message in console or launch Update() if already started
+	 * */
+	this.Start = function() 
+	{
+		if (!this.started) 
+		{
+			// operation start
+			this.started = true;
+			Print('System:Group ' + this.name + " Started !");
+		}
+		this.Update();
+	};
+	/**
+	 * Update the speed of the camera when arrows keys are pushed.
+	 * */
+	this.Update = function () 
+	{
+		if (!this.isDeadZone) 
+		{
+			if(Input.KeysDown[37]) 
+			{
+				this.Transform.Position.x -= this.speed;
+			}
+			if(Input.KeysDown[38]) 
+			{
+				this.Transform.Position.y -= this.speed;
+			}
+			if(Input.KeysDown[39]) 
+			{
+				this.Transform.Position.x += this.speed;
+			}
+			if(Input.KeysDown[40]) 
+			{
+				this.Transform.Position.y += this.speed;
+			}
+		} 
+		else 
+		{
+			if (this.ObjectToFollow != null) 
+			{
+				if (this.ObjectToFollow.Transform.Position.x &lt; this.Transform.Position.x + this.Offsets.x) 
+				{
+					this.Transform.Position.x = this.ObjectToFollow.Transform.Position.x - this.Offsets.x;
+				}
+				if (this.ObjectToFollow.Transform.Position.x > this.Transform.Position.x + canvas.width - this.Offsets.x) 
+				{
+					this.Transform.Position.x = this.ObjectToFollow.Transform.Position.x + this.Offsets.x - canvas.width;
+				}
+				if (this.ObjectToFollow.Transform.Position.y &lt; this.Transform.Position.y + this.Offsets.y) 
+				{
+					this.Transform.Position.y = this.ObjectToFollow.Transform.Position.y - this.Offsets.y;
+				}
+				if (this.ObjectToFollow.Transform.Position.y > this.Transform.Position.y + canvas.height - this.Offsets.y) 
+				{
+					this.Transform.Position.y = this.ObjectToFollow.Transform.Position.y + this.Offsets.y - canvas.height;
+				}
+			}
+		}
+			
+		if (this.collideWorldBound) 
+		{
+			this.Transform.Position.x = Math.Clamp(this.Transform.Position.x, 0, Application.LoadedScene.WorldSize.x - canvas.width);
+			this.Transform.Position.y = Math.Clamp(this.Transform.Position.y, 0, Application.LoadedScene.WorldSize.y - canvas.height);
+		}
+
+	}
+	/**
+	 * Apply the Sepia filters from the Gfx Files
+	 * */
+	this.GFX = function() 
+	{
+		if (this.gfxEnabled) 
+		{
+			Gfx.Filters.Sepia({x: 0, y: 0, w: canvas.width, h: canvas.height});
+		}
+		
+	}
+	
+
+	this.Awake();
+
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AlphaMaskStruct.html">AlphaMaskStruct</a></li><li><a href="Camera.html">Camera</a></li><li><a href="Emitter.html">Emitter</a></li><li><a href="Field.html">Field</a></li><li><a href="Grid.html">Grid</a></li><li><a href="Group.html">Group</a></li><li><a href="Loader.html">Loader</a></li><li><a href="Particle.html">Particle</a></li><li><a href="ParticlesSystem.html">ParticlesSystem</a></li><li><a href="PathFinding.html">PathFinding</a></li><li><a href="Scene.html">Scene</a></li><li><a href="State.html">State</a></li><li><a href="StateMachine.html">StateMachine</a></li><li><a href="Tools_Physics.Box.html">Box</a></li><li><a href="Tools_Physics.Circle.html">Circle</a></li><li><a href="Transition.html">Transition</a></li><li><a href="Vector.html">Vector</a></li></ul><h3>Namespaces</h3><ul><li><a href="GameObjects_GameObjects.html">GameObjects/GameObjects</a></li><li><a href="GFX_Gfx.html">GFX/Gfx</a></li><li><a href="Tools_Debug.html">Tools/Debug</a></li><li><a href="Tools_Dialogue.html">Tools/Dialogue</a></li><li><a href="Tools_Input.html">Tools/Input</a></li><li><a href="Tools_LocalStorage.html">Tools/LocalStorage</a></li><li><a href="Tools_Log.html">Tools/Log</a></li><li><a href="Tools_Math.html">Tools/Math</a></li><li><a href="Tools_Physics.html">Tools/Physics</a></li><li><a href="Tools_Random.html">Tools/Random</a></li><li><a href="Tools_Time.html">Tools/Time</a></li><li><a href="Tools_Timer.html">Tools/Timer</a></li><li><a href="Tools_Tween.html">Tools/Tween</a></li><li><a href="Tools_Utils.html">Tools/Utils</a></li></ul><h3>Global</h3><ul><li><a href="global.html#canvas">canvas</a></li><li><a href="global.html#ImageLoaded">ImageLoaded</a></li><li><a href="global.html#LoadImages">LoadImages</a></li><li><a href="global.html#Run">Run</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Thu May 19 2016 10:02:52 GMT+0200 (Paris, Madrid (heure d’été))
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

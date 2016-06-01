@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Tools/Debug.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Tools/Debug.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Allow to &lt;ul>   &lt;li> Debug a Scene &lt;/li> &lt;li> Debug a GameObject &lt;/li> 
+ * 				   &lt;li> Show FPS &lt;/li> &lt;li> Show the Time &lt;/li>  
+ * 				   &lt;li> Give the mouse position &lt;/li> &lt;li> Everything at once &lt;/li>
+ * 			&lt;/ul>
+ *
+ * @namespace Tools/Debug 
+ * 
+ * */
+
+var Debug = 
+{
+	spriteOutlineColor: "grey",
+	colliderColor: "green",
+
+	Break: function() { debugger; },
+	Log: function(logMsg)	{console.log(logMsg);},
+	
+	/**
+	 * 
+	 * @function DebugScene
+	 * 
+	 * @memberof Tools/Debug
+	 * 
+	 *  
+	 * @description
+	 * Show &lt;ul> &lt;li> The Fps &lt;/li> &lt;li> The name of the scene &lt;/li> &lt;li> The mouse position &lt;/li> &lt;li> The Time &lt;/li> &lt;/ul>
+	 * */
+
+	DebugScene : function() 
+	{
+		if (Application.debugMode) 
+		{
+			this.ShowFPS();
+			this.SceneName();
+			this.MousePosition();
+			this.ShowTime();
+		}
+	},
+	
+	/**
+	 * 
+	 * @function ShowFPS
+	 * 
+	 * @memberof Tools/Debug
+	 * 
+	 *  
+	 * @description
+	 * Show the FPS ( Frame per Second )
+	 * */
+
+	ShowFPS : function()
+	{
+		ctx.fillStyle = "rgba(122,122,122, 0.4)";
+		ctx.RoundedBox(4, 4, 120, 70, 20);
+	
+		ctx.fillStyle = "rgba(122,122,122, 0.4)";
+		ctx.RoundedBox(canvas.width - 130, 4, 125, 30, 20);
+
+		if (Time.FPS > 40) 
+		{
+			ctx.fillStyle = "#65C065";
+		} 
+		else if (Time.FPS &lt; 20) 
+		{
+			ctx.fillStyle = "red";
+		}
+		else 
+		{
+			ctx.fillStyle = "orange";
+		}
+		ctx.fillRect(15,15,20,20);
+		ctx.fillText("FPS: " + Time.FPS, 38, 30);
+		ctx.fillStyle = "black";
+	},
+	
+	/**
+	 * 
+	 * @function SceneName
+	 * 
+	 * @memberof Tools/Debug
+	 * 
+	 *  
+	 * @description
+	 * Show the name of the scene
+	 * */
+
+	SceneName : function() 
+	{
+		ctx.font = '15px Arial';
+		ctx.fillStyle = 'black';
+		ctx.fillText(Application.LoadedScene.name, canvas.width - 100, 20);
+	},
+	
+	/**
+	 * 
+	 * @function MousePosition
+	 * 
+	 * @memberof Tools/Debug
+	 * 
+	 *  
+	 * @description
+	 * Show the mouse position
+	 * */
+
+	MousePosition : function() 
+	{
+		ctx.font = '10px Arial';
+		if (Input.mouseClick) 
+		{
+			ctx.fillStyle = '#65C065';
+		}
+		else 
+		{
+			ctx.fillStyle = 'white';
+		}
+		ctx.fillText(Input.MousePosition.x+" "+Input.MousePosition.y, Input.MousePosition.x-10, Input.MousePosition.y-2);
+	},
+	
+	/**
+	 * 
+	 * @function ShowTime
+	 * 
+	 * @memberof Tools/Debug
+	 * 
+	 *  
+	 * @description
+	 * Show the Time since the game is started and since the scene is started
+	 * */
+
+	ShowTime : function() 
+	{
+		ctx.font = '10px Arial';
+		ctx.fillStyle = 'white';
+		var timeGame = Time.GetTimeSinceGameBegin()/1000 |0;
+		var timeScene = Time.GetTimeSinceSceneBegin()/1000 |0;
+		ctx.fillText("Game: " + timeGame.toString().toHHMMSS(), 10, 50);
+		ctx.fillText("Scene: " + timeScene.toString().toHHMMSS(), 10, 60);
+	},
+
+
+	/**
+	 * 
+	 * @function DebugObject
+	 * 
+	 * @memberof Tools/Debug
+	 * @param {GameObject} _go - The GameObject who will be debugged
+	 * 
+	 *  
+	 * @description
+	 * Show &lt;ul> &lt;li> The name &lt;/li> &lt;li> The position &lt;/li> &lt;li> The scale &lt;/li> &lt;li> The collider &lt;/li> &lt;li> The pivot point (little red circle) &lt;/li> &lt;/ul> of the GameObject
+	 * */
+	DebugObject : function(_go) 
+	{
+		if (Application.debugMode ) 
+		{
+
+			var scaledW =_go.Transform.Size.x * _go.Transform.Scale.x;
+			var scaledH = _go.Transform.Size.y * _go.Transform.Scale.y;
+			var posX = _go.Transform.Position.x - scaledW*_go.Transform.Pivot.x;
+			var posY = _go.Transform.Position.y - scaledH*_go.Transform.Pivot.y;
+
+			ctx.fillStyle= "rgba(80,250,80,0.3)";
+			if (_go.Physics.Collider.Size != undefined &amp;&amp; _go.Physics.Collider.Position != undefined ) 
+			{
+				var colW = _go.Physics.Collider.Size.x * _go.Transform.Scale.x;
+	   			var colH = _go.Physics.Collider.Size.y * _go.Transform.Scale.y;
+	   			var colX = _go.Physics.Collider.Position.x - scaledW*_go.Transform.Pivot.x;
+	   			var colY = _go.Physics.Collider.Position.y - scaledH*_go.Transform.Pivot.y;
+
+				ctx.fillRect(colX,colY,colW,colH);
+				ctx.textBaseline = 'top';
+				ctx.fillStyle= "darkgreen";
+				ctx.fillText(colX + " " + colY + " " + colW + " " + colH, posX, posY+scaledH+20);
+			} 
+			else if (_go.Physics.Collider instanceof Box) 
+			{
+				var colW = _go.Physics.Collider.w * _go.Transform.Scale.x;
+	   			var colH = _go.Physics.Collider.h * _go.Transform.Scale.y;
+	   			var colX = _go.Physics.Collider.x - scaledW*_go.Transform.Pivot.x;
+	   			var colY = _go.Physics.Collider.y - scaledH*_go.Transform.Pivot.y;
+
+				ctx.fillRect(colX,colY,colW,colH);
+				ctx.textBaseline = 'top';
+				ctx.fillStyle= "darkgreen";
+				ctx.fillText(colX + " " + colY + " " + colW + " " + colH, posX, posY+scaledH+20);
+			} 
+			else if (_go.Physics.Collider instanceof Circle) 
+			{
+				var x = _go.Physics.Collider.x - scaledW*_go.Transform.Pivot.x;
+				var y = _go.Physics.Collider.y - scaledH*_go.Transform.Pivot.y;
+				var radius = _go.Physics.Collider.radius * _go.Transform.Scale.x;
+
+				ctx.beginPath();
+				ctx.arc(x, y, radius, 0, Math.PI * 2);
+				ctx.closePath();
+				ctx.fill();
+				ctx.textBaseline = 'top';
+				ctx.fillStyle= "darkgreen";
+				ctx.fillText(x + " " + y+ " " + radius, posX, posY+scaledH+20);
+			}
+
+			ctx.strokeStyle= "gray";
+			if (_go.Renderer.Material) 
+			{
+				ctx.strokeRect(posX,posY,scaledW,scaledH);
+			}
+
+			ctx.font = '13px Arial';
+			ctx.fillStyle = 'white';
+			ctx.textBaseline = 'top';
+			ctx.fillText(_go.name, posX, posY+scaledH+3);
+
+			ctx.font = '9px Arial';
+			ctx.fillStyle = 'white';
+			ctx.textBaseline = 'bottom';
+			ctx.fillText(posX+" "+posY+" "+scaledW+" "+scaledH, posX, posY-2);
+
+			ctx.fillStyle = 'red';
+			ctx.beginPath();
+			ctx.arc(_go.Transform.Position.x , _go.Transform.Position.y , 1, 0, Math.PI * 2);
+			ctx.closePath();
+
+			ctx.fill();
+		}
+		else
+		{
+			PrintErr("Debug.debugObject doesn't receive an object");
+		}
+	}
+	
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AlphaMaskStruct.html">AlphaMaskStruct</a></li><li><a href="Camera.html">Camera</a></li><li><a href="Emitter.html">Emitter</a></li><li><a href="Field.html">Field</a></li><li><a href="Grid.html">Grid</a></li><li><a href="Group.html">Group</a></li><li><a href="Loader.html">Loader</a></li><li><a href="Particle.html">Particle</a></li><li><a href="ParticlesSystem.html">ParticlesSystem</a></li><li><a href="PathFinding.html">PathFinding</a></li><li><a href="Scene.html">Scene</a></li><li><a href="State.html">State</a></li><li><a href="StateMachine.html">StateMachine</a></li><li><a href="Tools_Physics.Box.html">Box</a></li><li><a href="Tools_Physics.Circle.html">Circle</a></li><li><a href="Transition.html">Transition</a></li><li><a href="Vector.html">Vector</a></li></ul><h3>Namespaces</h3><ul><li><a href="GameObjects_GameObjects.html">GameObjects/GameObjects</a></li><li><a href="GFX_Gfx.html">GFX/Gfx</a></li><li><a href="Tools_Debug.html">Tools/Debug</a></li><li><a href="Tools_Dialogue.html">Tools/Dialogue</a></li><li><a href="Tools_Input.html">Tools/Input</a></li><li><a href="Tools_LocalStorage.html">Tools/LocalStorage</a></li><li><a href="Tools_Log.html">Tools/Log</a></li><li><a href="Tools_Math.html">Tools/Math</a></li><li><a href="Tools_Physics.html">Tools/Physics</a></li><li><a href="Tools_Random.html">Tools/Random</a></li><li><a href="Tools_Time.html">Tools/Time</a></li><li><a href="Tools_Timer.html">Tools/Timer</a></li><li><a href="Tools_Tween.html">Tools/Tween</a></li><li><a href="Tools_Utils.html">Tools/Utils</a></li></ul><h3>Global</h3><ul><li><a href="global.html#canvas">canvas</a></li><li><a href="global.html#ImageLoaded">ImageLoaded</a></li><li><a href="global.html#LoadImages">LoadImages</a></li><li><a href="global.html#Run">Run</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Thu May 19 2016 10:02:52 GMT+0200 (Paris, Madrid (heure d’été))
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

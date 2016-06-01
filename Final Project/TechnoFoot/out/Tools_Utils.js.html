@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Tools/Utils.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Tools/Utils.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * 
+ * is a collection of utilitarian function 
+ * @namespace Tools/Utils
+ * */
+
+
+/**
+*
+*Applies the mouse position to gameobject
+*
+*@function UpdateForDragAndDrop
+*@param {GameObject} _go - Add the GameObject that Drag and Dropp
+*
+*@memberof Tools/Utils
+*
+**/
+function UpdateForDragAndDrop(_go)
+{
+    var gameObject = _go;
+    if (Input.mouseDraging)
+    {
+		gameObject.Transform.Position.x = Input.MousePosition.x + gameObject.MousePositionOffset.x;
+		gameObject.Transform.Position.y = Input.MousePosition.y + gameObject.MousePositionOffset.y;
+		gameObject.Physics.Collider.Position = gameObject.Transform.Position;
+	}
+}
+
+/**
+*
+* Calculates the coordinates from the index of an array
+*
+* @function IndexFromCoord
+* @param {Number} _x - coordinates x
+* @param {Number} _y - coordinates y
+* @param {Number} _col - number of Column
+* 
+* @return {Number}
+*
+*@memberof Tools/Utils 
+**/
+function IndexFromCoord(_x, _y, _col)
+{
+    if(typeof _x != 'number') PrintErr("Parameter x in IndexFromCoord");
+    if(typeof _y != 'number') PrintErr("Parameter y in IndexFromCoord");
+    if(typeof _col != 'number') PrintErr("Parameter number of column in IndexFromCoord");
+    return _x + _y * _col;
+}
+
+/**
+*
+* Calculates the index of an array from the coordinates 
+*
+* @function CoordFromIndex
+* @param {Number} _index - the index of an array
+* @param {Number} _col - the number of column
+* 
+* @return {Vector}
+*
+*@memberof Tools/Utils 
+**/
+
+function CoordFromIndex(_index, _col)
+{
+    if(typeof _index != 'number') PrintErr("Parameter index in CoordFromIndex");
+    if(typeof _col != 'number') PrintErr("Parameter number of column in CoordFromIndex");
+    var x = _index % _col;
+    var y = (_index - x) / _col;
+    return new Vector(x, y);
+}
+
+/**
+*
+* Draw an Rounded Box 
+*
+* @function RoundedBox
+* @param {Number} _x - the position x of the box
+* @param {Number} _y - the position y of the box
+* @param {Number} _w - the width of the box
+* @param {Number} _h - the height of the box
+* @param {Number} _r - the border radius of the box
+* 
+* 
+*
+*@memberof Tools/Utils 
+**/
+CanvasRenderingContext2D.prototype.RoundedBox = function(_x, _y, _w, _h, _r) 
+{
+
+    if(typeof _x != 'number') PrintErr("Parameter x in RoundedBox");
+    if(typeof _y != 'number') PrintErr("Parameter y in RoundedBox");
+    if(typeof _w != 'number') PrintErr("Parameter width in RoundedBox");
+    if(typeof _h != 'number') PrintErr("Parameter height in RoundedBox");
+    if(typeof _r === "undefined" &amp;&amp; typeof _r != 'number') _r = 2;
+    this.beginPath();
+    this.moveTo(_x + _r, _y);
+    this.lineTo(_x + _w - _r, _y);
+    this.quadraticCurveTo(_x + _w, _y, _x + _w, _y + _r);
+    this.lineTo(_x + _w, _y + _h - _r);
+    this.quadraticCurveTo(_x + _w, _y + _h, _x + _w - _r, _y + _h);
+    this.lineTo(_x + _r, _y + _h);
+    this.quadraticCurveTo(_x, _y + _h, _x, _y + _h - _r);
+    this.lineTo(_x, _y + _r);
+    this.quadraticCurveTo(_x, _y, _x + _r, _y);
+    this.closePath();
+    this.fill();
+};</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AlphaMaskStruct.html">AlphaMaskStruct</a></li><li><a href="Camera.html">Camera</a></li><li><a href="Emitter.html">Emitter</a></li><li><a href="Field.html">Field</a></li><li><a href="Grid.html">Grid</a></li><li><a href="Group.html">Group</a></li><li><a href="Loader.html">Loader</a></li><li><a href="Particle.html">Particle</a></li><li><a href="ParticlesSystem.html">ParticlesSystem</a></li><li><a href="PathFinding.html">PathFinding</a></li><li><a href="Scene.html">Scene</a></li><li><a href="State.html">State</a></li><li><a href="StateMachine.html">StateMachine</a></li><li><a href="Tools_Physics.Box.html">Box</a></li><li><a href="Tools_Physics.Circle.html">Circle</a></li><li><a href="Transition.html">Transition</a></li><li><a href="Vector.html">Vector</a></li></ul><h3>Namespaces</h3><ul><li><a href="GameObjects_GameObjects.html">GameObjects/GameObjects</a></li><li><a href="GFX_Gfx.html">GFX/Gfx</a></li><li><a href="Tools_Debug.html">Tools/Debug</a></li><li><a href="Tools_Dialogue.html">Tools/Dialogue</a></li><li><a href="Tools_Input.html">Tools/Input</a></li><li><a href="Tools_LocalStorage.html">Tools/LocalStorage</a></li><li><a href="Tools_Log.html">Tools/Log</a></li><li><a href="Tools_Math.html">Tools/Math</a></li><li><a href="Tools_Physics.html">Tools/Physics</a></li><li><a href="Tools_Random.html">Tools/Random</a></li><li><a href="Tools_Time.html">Tools/Time</a></li><li><a href="Tools_Timer.html">Tools/Timer</a></li><li><a href="Tools_Tween.html">Tools/Tween</a></li><li><a href="Tools_Utils.html">Tools/Utils</a></li></ul><h3>Global</h3><ul><li><a href="global.html#canvas">canvas</a></li><li><a href="global.html#ImageLoaded">ImageLoaded</a></li><li><a href="global.html#LoadImages">LoadImages</a></li><li><a href="global.html#Run">Run</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Thu May 19 2016 10:02:52 GMT+0200 (Paris, Madrid (heure d’été))
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

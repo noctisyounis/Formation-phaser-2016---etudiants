@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Namespace: Tools/Utils</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Namespace: Tools/Utils</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Tools/Utils</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">is a collection of utilitarian function</div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Tools_Utils.js.html">Tools/Utils.js</a>, <a href="Tools_Utils.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id=".CoordFromIndex"><span class="type-signature">(static) </span>CoordFromIndex<span class="signature">(_index, _col)</span><span class="type-signature"> &rarr; {<a href="Vector.html">Vector</a>}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Calculates the index of an array from the coordinates
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>_index</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the index of an array</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>_col</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the number of column</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Tools_Utils.js.html">Tools/Utils.js</a>, <a href="Tools_Utils.js.html#line50">line 50</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="Vector.html">Vector</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".IndexFromCoord"><span class="type-signature">(static) </span>IndexFromCoord<span class="signature">(_x, _y, _col)</span><span class="type-signature"> &rarr; {Number}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Calculates the coordinates from the index of an array
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>_x</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">coordinates x</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>_y</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">coordinates y</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>_col</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">number of Column</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Tools_Utils.js.html">Tools/Utils.js</a>, <a href="Tools_Utils.js.html#line29">line 29</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Number</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".RoundedBox"><span class="type-signature">(static) </span>RoundedBox<span class="signature">(_x, _y, _w, _h, _r)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Draw an Rounded Box
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>_x</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the position x of the box</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>_y</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the position y of the box</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>_w</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the width of the box</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>_h</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the height of the box</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>_r</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the border radius of the box</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Tools_Utils.js.html">Tools/Utils.js</a>, <a href="Tools_Utils.js.html#line72">line 72</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".UpdateForDragAndDrop"><span class="type-signature">(static) </span>UpdateForDragAndDrop<span class="signature">(_go)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Applies the mouse position to gameobject
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>_go</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">GameObject</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Add the GameObject that Drag and Dropp</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Tools_Utils.js.html">Tools/Utils.js</a>, <a href="Tools_Utils.js.html#line8">line 8</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AlphaMaskStruct.html">AlphaMaskStruct</a></li><li><a href="Camera.html">Camera</a></li><li><a href="Emitter.html">Emitter</a></li><li><a href="Field.html">Field</a></li><li><a href="Grid.html">Grid</a></li><li><a href="Group.html">Group</a></li><li><a href="Loader.html">Loader</a></li><li><a href="Particle.html">Particle</a></li><li><a href="ParticlesSystem.html">ParticlesSystem</a></li><li><a href="PathFinding.html">PathFinding</a></li><li><a href="Scene.html">Scene</a></li><li><a href="State.html">State</a></li><li><a href="StateMachine.html">StateMachine</a></li><li><a href="Tools_Physics.Box.html">Box</a></li><li><a href="Tools_Physics.Circle.html">Circle</a></li><li><a href="Transition.html">Transition</a></li><li><a href="Vector.html">Vector</a></li></ul><h3>Namespaces</h3><ul><li><a href="GameObjects_GameObjects.html">GameObjects/GameObjects</a></li><li><a href="GFX_Gfx.html">GFX/Gfx</a></li><li><a href="Tools_Debug.html">Tools/Debug</a></li><li><a href="Tools_Dialogue.html">Tools/Dialogue</a></li><li><a href="Tools_Input.html">Tools/Input</a></li><li><a href="Tools_LocalStorage.html">Tools/LocalStorage</a></li><li><a href="Tools_Log.html">Tools/Log</a></li><li><a href="Tools_Math.html">Tools/Math</a></li><li><a href="Tools_Physics.html">Tools/Physics</a></li><li><a href="Tools_Random.html">Tools/Random</a></li><li><a href="Tools_Time.html">Tools/Time</a></li><li><a href="Tools_Timer.html">Tools/Timer</a></li><li><a href="Tools_Tween.html">Tools/Tween</a></li><li><a href="Tools_Utils.html">Tools/Utils</a></li></ul><h3>Global</h3><ul><li><a href="global.html#canvas">canvas</a></li><li><a href="global.html#ImageLoaded">ImageLoaded</a></li><li><a href="global.html#LoadImages">LoadImages</a></li><li><a href="global.html#Run">Run</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Thu May 19 2016 10:02:53 GMT+0200 (Paris, Madrid (heure d’été))
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

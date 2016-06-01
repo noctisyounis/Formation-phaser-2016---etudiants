@@ -1,0 +1,28 @@
+Particle -> Particule ( emmitter : new Particle)
+
+	argument : color
+
+	Particule.SubmitToFields -> 
+
+		- for (var i = 0; i < Application.LoadedScene.GameObjects[0].fields.length; i++) 
+							TO
+		for (var i = 0; i < Application.LoadedScene.Groups[0].Fields.length; i++)
+
+		- var strength = field.mass / Math.pow(vector.LengthSq(),1.5);
+					Why math.pow ... ? 
+
+_______________________________
+Emitter (attention majuscule : this.Velocity)
+
+	this.angleNow?? Useless
+
+	Update -> this.particules[i].Render into Particule.Update
+_______________________________
+Field
+
+
+_______________________________
+ParticulesSystemExample
+
+ # Need to doc this #
+		- If I want more Emitter, I need to change this.AddElement!

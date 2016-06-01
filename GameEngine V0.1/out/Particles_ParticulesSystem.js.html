@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Particles/ParticulesSystem.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Particles/ParticulesSystem.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Create a new Particles System
+ * 
+ * @class
+ * @param {Vector} _position - The position of the ParticlesSystem
+ * @return {ParticlesSystem}
+ * */
+function ParticlesSystem(_position)
+{
+	this.name = "ParticlesSystem";
+	this.enabled = true;
+	this.started = false;
+	this.rendered = true;
+
+	this.Parent = null;
+
+	this.Emitters = [];
+	this.Fields = [];
+	
+	this.Transform = {};
+	this.Transform.RelativePosition = _position;
+	this.Transform.Position = new Vector();
+	this.Transform.RelativeScale = new Vector(1, 1);
+	this.Transform.Size = new Vector();
+	this.Transform.Scale = new Vector(1,1);
+
+	/** 
+	* Add a Field or an Emitter to the Particles System
+	* @param {Emitter|Field} _element - The vector to add
+	*
+	* */
+	this.AddElement = function(_element)
+	{
+		if (_element instanceof Emitter) 
+		{
+			_element.Parent = this;
+			this.Emitters.push(_element);
+		}
+		else if (_element instanceof Field) 
+		{
+			_element.Parent = this;
+			this.Fields.push(_element);
+		}
+		else 
+		{
+			PrintErr("Particule System " + this.name + " can only add Emitters or Fields");
+		}
+	}
+
+	/** 
+	* Create the Particles System, log a message in the console
+	*
+	* */
+	this.Awake = function()
+	{
+		Print('System: Particle System ' + this.name + " Created !");
+	};
+
+	/** 
+	* Start the Particles System, launch Update() if already started
+	*
+	* */
+	this.Start = function() 
+	{
+		if (!this.started) 
+		{
+			// operation start
+			// add Emitter
+			//add Fiels
+			this.started = true;
+			Print('System: Particle System ' + this.name + " Started !");
+		}
+		this.Update();
+	};
+	/** 
+	* Update every values of the Particles System
+	*
+	* */
+	this.Update = function() 
+	{
+		if ( this.enabled ) 
+		{
+			if (this.Parent != null)
+			{
+				this.Transform.Position.x = this.Transform.RelativePosition.x + this.Parent.Transform.Position.x;
+				this.Transform.Position.y = this.Transform.RelativePosition.y + this.Parent.Transform.Position.y;
+				this.Transform.Scale.x = this.Transform.RelativeScale.x * this.Parent.Transform.Scale.x;
+				this.Transform.Scale.y = this.Transform.RelativeScale.y * this.Parent.Transform.Scale.y;
+			}
+			else
+			{
+				this.Transform.Position.x = this.Transform.RelativePosition.x;
+				this.Transform.Position.y = this.Transform.RelativePosition.y;
+				this.Transform.Scale.x = this.Transform.RelativeScale.x;
+				this.Transform.Scale.y = this.Transform.RelativeScale.y;
+			}
+
+			for (var emitter in this.Emitters) 
+			{
+				this.Emitters[emitter].Update();
+			}
+
+			for (var field in this.Fields){
+				this.Fields[field].Update();
+			}
+		}
+	};
+
+	this.Awake();
+
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AlphaMaskStruct.html">AlphaMaskStruct</a></li><li><a href="Camera.html">Camera</a></li><li><a href="Emitter.html">Emitter</a></li><li><a href="Field.html">Field</a></li><li><a href="Grid.html">Grid</a></li><li><a href="Group.html">Group</a></li><li><a href="Loader.html">Loader</a></li><li><a href="Particle.html">Particle</a></li><li><a href="ParticlesSystem.html">ParticlesSystem</a></li><li><a href="PathFinding.html">PathFinding</a></li><li><a href="Scene.html">Scene</a></li><li><a href="State.html">State</a></li><li><a href="StateMachine.html">StateMachine</a></li><li><a href="Tools_Physics.Box.html">Box</a></li><li><a href="Tools_Physics.Circle.html">Circle</a></li><li><a href="Transition.html">Transition</a></li><li><a href="Vector.html">Vector</a></li></ul><h3>Namespaces</h3><ul><li><a href="GameObjects_GameObjects.html">GameObjects/GameObjects</a></li><li><a href="GFX_Gfx.html">GFX/Gfx</a></li><li><a href="Tools_Debug.html">Tools/Debug</a></li><li><a href="Tools_Dialogue.html">Tools/Dialogue</a></li><li><a href="Tools_Input.html">Tools/Input</a></li><li><a href="Tools_LocalStorage.html">Tools/LocalStorage</a></li><li><a href="Tools_Log.html">Tools/Log</a></li><li><a href="Tools_Math.html">Tools/Math</a></li><li><a href="Tools_Physics.html">Tools/Physics</a></li><li><a href="Tools_Random.html">Tools/Random</a></li><li><a href="Tools_Time.html">Tools/Time</a></li><li><a href="Tools_Timer.html">Tools/Timer</a></li><li><a href="Tools_Tween.html">Tools/Tween</a></li><li><a href="Tools_Utils.html">Tools/Utils</a></li></ul><h3>Global</h3><ul><li><a href="global.html#canvas">canvas</a></li><li><a href="global.html#ImageLoaded">ImageLoaded</a></li><li><a href="global.html#LoadImages">LoadImages</a></li><li><a href="global.html#Run">Run</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Thu May 19 2016 10:02:52 GMT+0200 (Paris, Madrid (heure d’été))
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

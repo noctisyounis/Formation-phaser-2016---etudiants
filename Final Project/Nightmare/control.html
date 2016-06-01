@@ -1,0 +1,77 @@
+<html>
+<head>
+	<title> Device Orientation </title>
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+	<link rel="stylesheet" href="Assets/Scripts/CSS/ratchet.min.css">
+	<link rel="stylesheet" href="Assets/Scripts/CSS/control.css">
+</head>
+<body>
+	<header class="bar bar-nav"><h1 class="title">Controller Mode<h1></header>
+	<div class="content">
+		<p style="display: none" id="contentElem"></p>
+		<button class="btn btn-primary btn-block" type="button" id="calibrate"> Recalibrate </button>
+	</div>
+	
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+		var url = 'http://10.10.10.76:8000';
+		//var url = 'http://192.168.1.58:8000';
+		var socket = io.connect(url);
+		var calibrated = false;
+		var offset = 0;
+		var alpha = 0;
+		var lastEmit = Date.now();
+		window.addEventListener('deviceorientation', function(e)
+		{
+			if(Date.now() - lastEmit > 30)
+			{
+				alpha = Math.round(e.alpha);
+				document.getElementById("contentElem").innerHTML = "alpha -- " + alpha;
+				socket.emit('deviceorientation',
+				{
+					'calibrated' : calibrated,
+					'alpha': offset - alpha
+				});
+				lastEmit = Date.now();
+			}
+				
+		});
+
+		window.addEventListener('devicemotion', function(e)
+		{
+			if(Date.now() - lastEmit > 30)
+			{
+				var accelX = Math.abs(Math.round(e.acceleration.x));
+				var accelY = Math.abs(Math.round(e.acceleration.y));
+				var accelZ = Math.abs(Math.round(e.acceleration.z));
+				if (accelX + accelY + accelZ > 20) 
+				{
+					socket.emit('devicemotion',
+					{
+						'accelX': accelX,
+						'accelY': accelY,
+						'accelZ': accelZ,
+					});
+					lastEmit = Date.now();
+				}
+				
+				
+			}
+				
+		});
+		document.getElementById("calibrate").addEventListener("click",function(e) 
+		{
+			offset = alpha;
+			calibrated = true;
+/*			document.getElementById("calibrate").classList.add("btn-outlined");
+			document.getElementById("calibrate").attributes("disabled",true)*/
+		});
+		socket.on('restart', function (data) 
+		{
+			calibrated = false;
+		});
+
+	</script>
+		
+</body>
+</html>

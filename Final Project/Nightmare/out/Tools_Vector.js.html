@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Tools/Vector.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Tools/Vector.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Create a new Vector
+ * 
+ * @class
+ * @param {Number} _x - The horizontal position
+ * @param {Number} _y - The vertical position
+ * 
+ * @return {Vector}
+ * */
+function Vector(_x, _y) 
+{
+	this.x = _x || 0;
+	this.y = _y || 0;
+
+	if(typeof this.x != 'number' ) PrintErr("Parameter x in Vector constructor");
+	if(typeof this.y != 'number') PrintErr("Parameter y in Vector constructor");
+	/** 
+	* Add two Vectors
+	* @param {Vector} _vector - The vector to add
+	*
+	* @return {Vector}
+	* */
+	this.Add = function(_vector) 
+	{
+		if (_vector instanceof Vector) 
+		{
+			this.x += _vector.x;
+			this.y += _vector.y;
+
+			return this;
+		} else { PrintErr("Invalid Parameter(s) in Vector.Add"); }
+		
+	}
+	/**
+	*
+	* Substract a vector to another one
+	*
+	* @param {Vector} _vector - The vector to substract
+	*
+	* @return {Vector}
+	*
+	* */
+	this.Sub = function(_vector) 
+	{
+		if (_vector instanceof Vector) 
+		{
+			this.x -= _vector.x;
+			this.y -= _vector.y;
+
+			return this;
+		} else { PrintErr("Invalid Parameter(s) in Vector.Sub"); }
+	}
+
+    /**
+	*
+	* Give the length of a vector
+	*
+	* @return {Number}
+	*
+	* */
+	this.Length = function() 
+	{
+		var l = Math.sqrt(this.x * this.x + this.y * this.y);
+		return l;
+	}
+	/**
+	*
+	* Give the length of a vector, use for comparison between two vectors.
+	*
+	* @return {Number}
+	*
+	* */
+
+	this.LengthSq = function() 
+	{
+		var l = this.x * this.x + this.y * this.y;
+		return l;
+	}
+	/**
+	*
+	* Multiply a vector to a number &lt;br />
+	* this.x * number, this.y * number.
+	*
+	* @param {Number} _number - The number to Multiply
+	*
+	* @return {Vector}
+	*
+	* */
+	
+	this.Mul = function(_number) 
+	{
+		if (typeof _number == 'number') 
+		{
+			this.x *= _number;
+			this.y *= _number;
+
+			return this;
+		} else { PrintErr("Invalid Parameter(s) in Vector.Mul"); }
+	}
+	/**
+	*
+	* Multiply a vector to a vector &lt;br />
+	* this.x * _vector.x, this.y * _vector.y.
+	*
+	* @param {Vector} _vector - The vector to Multiply
+	*
+	* @return {Vector}
+	*
+	* */
+	this.Multiply = function(_vector) 
+	{
+		if (_vector instanceof Vector) 
+		{
+			this.x *= _vector.x;
+			this.y *= _vector.y;
+
+			return this;
+		} else { PrintErr("Invalid Parameter(s) in Vector.Multiply"); }
+	}
+	/**
+	*
+	* Divide a vector by a number &lt;br />
+	* this.x / _number , this.y / _number
+	*
+	* @param {Number} _number - The number to divide
+	*
+	* @return {Vector}
+	*
+	* */
+	this.Div = function(_number) 
+	{
+		if (typeof _number == 'number') 
+		{
+			this.x /= _number;
+			this.y /= _number;
+
+			return this;
+		} else { PrintErr("Invalid Parameter(s) in Vector.Div"); }
+	}
+    /**
+	* 
+	* Normalize the vector
+	*
+	* @return {Vector}
+	*
+	* */
+	this.Normalize = function() 
+	{
+		var v = new Vector();
+		v.x = this.x;
+		v.y = this.y;
+		v.Div(this.Length());
+		return v;
+	}
+	/**
+	* 
+	* Give the angle from the vector
+	* @memberof Tools/Vector
+	* @function GetAngle
+	*
+	* @return {Vector}
+	*
+	* */
+	this.GetAngle = function() 
+	{
+		return Math.atan2(this.y, this.x);
+	}
+    /**
+	* 
+	* Create a vector from the _angle.
+	*
+	* @param {Number} _angle - The angle to start from
+	*
+	* @return {Vector}
+	*
+	* */
+	
+	this.FromAngle = function(_angle) 
+	{
+		if (typeof _angle == "number") 
+		{
+			return new Vector(this.Length() * Math.cos(_angle), this.Length() * Math.sin(_angle));
+		} else { PrintErr("Invalid Parameter(s) in Vector.FromAngle"); }
+	}
+}
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AlphaMaskStruct.html">AlphaMaskStruct</a></li><li><a href="Camera.html">Camera</a></li><li><a href="Emitter.html">Emitter</a></li><li><a href="Field.html">Field</a></li><li><a href="Grid.html">Grid</a></li><li><a href="Group.html">Group</a></li><li><a href="Loader.html">Loader</a></li><li><a href="Particle.html">Particle</a></li><li><a href="ParticlesSystem.html">ParticlesSystem</a></li><li><a href="PathFinding.html">PathFinding</a></li><li><a href="Scene.html">Scene</a></li><li><a href="State.html">State</a></li><li><a href="StateMachine.html">StateMachine</a></li><li><a href="Tools_Physics.Box.html">Box</a></li><li><a href="Tools_Physics.Circle.html">Circle</a></li><li><a href="Transition.html">Transition</a></li><li><a href="Vector.html">Vector</a></li></ul><h3>Namespaces</h3><ul><li><a href="GameObjects_GameObjects.html">GameObjects/GameObjects</a></li><li><a href="GFX_Gfx.html">GFX/Gfx</a></li><li><a href="Tools_Debug.html">Tools/Debug</a></li><li><a href="Tools_Dialogue.html">Tools/Dialogue</a></li><li><a href="Tools_Input.html">Tools/Input</a></li><li><a href="Tools_LocalStorage.html">Tools/LocalStorage</a></li><li><a href="Tools_Log.html">Tools/Log</a></li><li><a href="Tools_Math.html">Tools/Math</a></li><li><a href="Tools_Physics.html">Tools/Physics</a></li><li><a href="Tools_Random.html">Tools/Random</a></li><li><a href="Tools_Time.html">Tools/Time</a></li><li><a href="Tools_Timer.html">Tools/Timer</a></li><li><a href="Tools_Tween.html">Tools/Tween</a></li><li><a href="Tools_Utils.html">Tools/Utils</a></li></ul><h3>Global</h3><ul><li><a href="global.html#canvas">canvas</a></li><li><a href="global.html#ImageLoaded">ImageLoaded</a></li><li><a href="global.html#LoadImages">LoadImages</a></li><li><a href="global.html#Run">Run</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Thu May 19 2016 10:02:52 GMT+0200 (Paris, Madrid (heure d’été))
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

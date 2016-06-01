@@ -1,0 +1,110 @@
+<html><head><meta charset="utf-8" /><title>multipaint</title></head>
+<body>
+	<input id="color" type="color">
+	<input id="size" type="number" step="1" min="1" max="10">
+	<canvas id="paper" width="1900" height="1000"> c'est cassé !</canvas>
+	<script src="/socket.io/socket.io.js"></script>
+
+	<script>
+	// Variables 
+	//-----------------------------------------------------------------------------------
+		var color = document.getElementById('color');
+		var lineSize = document.getElementById('size');
+
+		var	canvas = document.getElementById('paper');
+			ctx = canvas.getContext('2d');
+
+			lineSize.value = ctx.lineWidth;
+		// unique ID
+		var id = Math.round(Date.now() * Math.random());
+
+		var drawing = false;
+		var clients = {};
+		var prev = {};
+	//-----------------------------------------------------------------------------------
+	
+	// Online 
+	//-----------------------------------------------------------------------------------
+		var url = 'http://10.10.7.52:8080';
+		var socket = io.connect(url);
+
+		socket.on('moving', function (data) 
+		{
+			// Is the user drawing?
+			if(data.drawing && clients[data.id])
+			{
+				drawLine(clients[data.id].x, clients[data.id].y, data.x, data.y, data.color, data.lineWidth);
+			}
+
+			// Saving the current client state
+			clients[data.id] = data;
+			clients[data.id].updated = Date.now();
+		});
+
+		document.addEventListener('mousedown',function(e)
+		{
+			if (e.target == canvas) {
+				e.preventDefault();
+				drawing = true;
+				prev.x = e.pageX;
+				prev.y = e.pageY;
+			}
+			
+		});
+
+		document.addEventListener('mouseup',function()
+		{
+			drawing = false;
+		});
+
+		var lastEmit = Date.now();
+
+		document.addEventListener('mousemove',function(e)
+		{
+			if(Date.now() - lastEmit > 30)
+			{
+				socket.emit('mousemove',
+				{
+					'x': e.pageX,
+					'y': e.pageY,
+					'drawing': drawing,
+					'id': id,
+					'color' : color.value,
+					'lineWidth' : lineSize.value
+				});
+				lastEmit = Date.now();
+			}
+
+			if(drawing)
+			{
+
+				drawLine(prev.x, prev.y, e.pageX, e.pageY, color.value, lineSize.value);
+
+				prev.x = e.pageX;
+				prev.y = e.pageY;
+			}
+		});
+
+		setInterval(function() // 10 secondes sans bouger, tu degage
+		{
+			for(ident in clients)
+			{
+				if(Date.now() - clients[ident].updated > 10000)
+				{
+					delete clients[ident];
+				}
+			}
+
+		},10000);
+
+		function drawLine(fromx, fromy, tox, toy, color, lineWidth)
+		{
+			ctx.beginPath();
+			ctx.moveTo(fromx, fromy);
+			ctx.lineTo(tox, toy);
+			ctx.lineWidth = lineWidth;
+			ctx.strokeStyle = color;
+			ctx.stroke();
+			ctx.closePath();
+		}
+	</script></body></html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Game/Config.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Game/Config.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Get Canvas and the context&lt;br/>
+ *
+ * - Create Scene Object which will contain the scene&lt;br/>
+ * - Create and set the gravity&lt;br/>
+ * - Application : An Object which will handle the scene to load, if game is paused or not and if debug mode is activate&lt;br/>
+ * - imagesLoaded : counter for loaded images&lt;br/>
+ * - WalkableTiles : an Array which will contain where integer where we can walk&lt;br/>
+ * - ImagesPath : Array of image object. Each image has a name and a path&lt;br/>
+ * - Images : an object which contain all loaded image
+ * 
+ * */
+
+
+var canvas = document.getElementById('canvas');
+var ctx = canvas.getContext("2d");
+
+var Scenes = {};
+var Gravity = new Vector();
+Gravity.y = -9.81;
+
+
+var Application = 
+{
+	LoadedScene: null,
+	gamePaused: false,
+	debugMode: false
+};
+
+var imagesLoaded = 0;
+var WalkableTiles = [];
+
+var ImagesPath = 
+[
+	// { name:"monImage",path: "background/image.png"},
+	{ name:"Boy",path: "Examples/PlanetCute/Character Boy.png"},
+	{ name:"Cat",path: "Examples/PlanetCute/Character Cat Girl.png"},
+	{ name:"Horn",path: "Examples/PlanetCute/Character Horn Girl.png"},
+	{ name:"Pink",path: "Examples/PlanetCute/Character Pink Girl.png"},
+	{ name:"Princess",path: "Examples/PlanetCute/Character Princess Girl.png"},
+	{ name:"Brown Block",path: "Examples/PlanetCute/Brown Block.png"},
+	{ name:"Enemy Bug",path: "Examples/PlanetCute/Enemy Bug.png"},
+	{ name:"Gem Blue",path: "Examples/PlanetCute/Gem Blue.png"},
+	{ name:"Gem Green",path: "Examples/PlanetCute/Gem Green.png"},
+	{ name:"Gem Orange",path: "Examples/PlanetCute/Gem Orange.png"},
+	{ name:"Heart",path: "Examples/PlanetCute/Heart.png"},
+	{ name:"Dirt Block",path: "Examples/PlanetCute/Dirt Block.png"},
+	{ name:"Grass Block",path: "Examples/PlanetCute/Grass Block.png"},
+	{ name:"Key",path: "Examples/PlanetCute/Key.png"},
+	{ name:"Plain Block",path: "Examples/PlanetCute/Plain Block.png"},
+	{ name:"Rock",path: "Examples/PlanetCute/Rock.png"},
+	{ name:"Stone Block",path: "Examples/PlanetCute/Stone Block.png"},
+	{ name:"Stone Block Tall",path: "Examples/PlanetCute/Stone Block Tall.png"},
+	{ name:"Tree Short",path: "Examples/PlanetCute/Tree Short.png"},
+	{ name:"Tree Tall",path: "Examples/PlanetCute/Tree Tall.png"},
+	{ name:"Wall Block",path: "Examples/PlanetCute/Wall Block.png"},
+	{ name:"Wall Block Tall",path: "Examples/PlanetCute/Wall Block Tall.png"},
+	{ name:"Selector",path: "Examples/PlanetCute/Selector.png"},
+	{ name:"Chest Closed",path: "Examples/PlanetCute/Chest Closed.png"},
+	{ name:"Chest Open",path: "Examples/PlanetCute/Chest Open.png"},
+	{ name:"Chest Lid",path: "Examples/PlanetCute/Chest Lid.png"},
+	{ name:"Water Block",path: "Examples/PlanetCute/Water Block.png"},
+	{ name:"Stone Block Tall",path: "Examples/PlanetCute/Stone Block Tall.png"},
+	{ name:"Wall Block Tall",path: "Examples/PlanetCute/Wall Block Tall.png"},
+	{ name:"Wood Block",path: "Examples/PlanetCute/Wood Block.png"},
+	{ name:"alphaMask1",path: "Examples/AlphaMask/round.jpg"},
+	{ name:"alphaMask2",path: "Examples/AlphaMask/fire.jpg"},
+	{ name:"Fond",path: "Examples/Fond.jpg"},
+	{ name:"bgDemo",path: "Examples/bgDemo.jpg"},
+	{ name:"alphaMask3",path: "Examples/AlphaMask/mask.png"},
+	{ name:"sprite",path: "Examples/drake.png"}
+];
+var Images = {};</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AlphaMaskStruct.html">AlphaMaskStruct</a></li><li><a href="Camera.html">Camera</a></li><li><a href="Emitter.html">Emitter</a></li><li><a href="Field.html">Field</a></li><li><a href="Grid.html">Grid</a></li><li><a href="Group.html">Group</a></li><li><a href="Loader.html">Loader</a></li><li><a href="Particle.html">Particle</a></li><li><a href="ParticlesSystem.html">ParticlesSystem</a></li><li><a href="PathFinding.html">PathFinding</a></li><li><a href="Scene.html">Scene</a></li><li><a href="State.html">State</a></li><li><a href="StateMachine.html">StateMachine</a></li><li><a href="Tools_Physics.Box.html">Box</a></li><li><a href="Tools_Physics.Circle.html">Circle</a></li><li><a href="Transition.html">Transition</a></li><li><a href="Vector.html">Vector</a></li></ul><h3>Namespaces</h3><ul><li><a href="GameObjects_GameObjects.html">GameObjects/GameObjects</a></li><li><a href="GFX_Gfx.html">GFX/Gfx</a></li><li><a href="Tools_Debug.html">Tools/Debug</a></li><li><a href="Tools_Dialogue.html">Tools/Dialogue</a></li><li><a href="Tools_Input.html">Tools/Input</a></li><li><a href="Tools_LocalStorage.html">Tools/LocalStorage</a></li><li><a href="Tools_Log.html">Tools/Log</a></li><li><a href="Tools_Math.html">Tools/Math</a></li><li><a href="Tools_Physics.html">Tools/Physics</a></li><li><a href="Tools_Random.html">Tools/Random</a></li><li><a href="Tools_Time.html">Tools/Time</a></li><li><a href="Tools_Timer.html">Tools/Timer</a></li><li><a href="Tools_Tween.html">Tools/Tween</a></li><li><a href="Tools_Utils.html">Tools/Utils</a></li></ul><h3>Global</h3><ul><li><a href="global.html#canvas">canvas</a></li><li><a href="global.html#ImageLoaded">ImageLoaded</a></li><li><a href="global.html#LoadImages">LoadImages</a></li><li><a href="global.html#Run">Run</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Thu May 19 2016 10:02:52 GMT+0200 (Paris, Madrid (heure d’été))
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

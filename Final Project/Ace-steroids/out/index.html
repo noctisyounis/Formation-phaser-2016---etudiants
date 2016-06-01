@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Home</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Home</h1>
+
+    
+
+
+
+    
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><h1> Getting Started </h1>
+
+<ul>
+    <li> <a href="#firstSteps">First Steps</a> </li>
+    <li> <a href="../index.html">Examples </a></li>
+</ul>
+
+<p><br /></p>
+<hr>
+
+<p><h1 id="firstSteps"> First Steps </h1>
+    <ol>
+        <li><a href="#createEnvironment"> Create the environment </a></li>
+        <li><a href="#loadImages">Load Images</a> </li>
+        <li><a href="#createScene"> Create a Scene </a></li>
+        <li><a href="#createGameObject"> Create a GameObject </a></li>
+    </ol></p>
+<p><br /></p>
+<p><hr>
+<br /></p>
+<h3 id="createEnvironment"> Create the environment </h3>
+
+<h6> Create the canvas </h6>
+
+<p> First of all you need to create a canvas in your HTML file. </p>
+
+<pre class="prettyprint source"><code>&lt;canvas id=&quot;canvas&quot;> &lt;/canvas></code></pre><p> You can now close your HTML file. </p>
+
+<h6> Set size of your canvas  </h6>
+
+<p> In the file Assets/Scripts/Javascript/Game/Init.js, you can set the width and the height of the canvas </p>
+
+<pre class="prettyprint source"><code>// Set the canvas size to window size
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;</code></pre><h6> Get the context of the canvas </h6>
+
+<p> In Assets/Scripts/Javascript/Game/Config.js, we get the context with this line </p>
+
+<pre class="prettyprint source"><code>var ctx = canvas.getContext(&quot;2d&quot;);</code></pre><p><br /></p>
+<p><hr>
+<br />    </p>
+<h3 id="loadImages"> Load Images </h3>
+
+<p> In order to load all your images, put them in Assets/Graphics. You now have to call them in Assets/Scripts/Javascript/Game/Config.js under ImagePath. </p>
+
+<pre class="prettyprint source"><code>var ImagePath = [{ name:&quot;Boy&quot;, path:&quot;Boy.jpg&quot; }];</code></pre><p> We'll see in the <a href="createGameObject"> GameObjects </a> section how to use it. </p>
+
+<p><br /></p>
+<p><hr>
+<br /></p>
+<h3 id="createScene"> Create a Scene </a> </h3>
+
+<p> A Scene is one of the most important part of the engine since it represents a stage. </p>
+
+<h6> Duplicate the SceneModel </h6>
+
+<p> Go to Assets/Scripts/Javascript/Scenes/SceneModel.js, duplicate all the code in a new file which will be your scene. <br />
+    Rename the function Scene to the name of your choice, change <code>this.name</code> to the name of your choice </p>
+
+<h6> Add the scene on the Loader </h6>
+
+<p> In the Start function add your scene to the array Scenes </p>
+
+<pre class="prettyprint source"><code>this.Start = function()
+{
+    if (!this.started)
+    {
+        Scenes[&quot;SceneName&quot;] = new SceneName();
+    }
+}</code></pre><p> Then go to Assets/Scripts/Javascript/Game/Init.js, in ImageLoaded function set the Application.LoadedScene to Scenes[&quot;SceneName&quot;] </p>
+
+<pre class="prettyprint source"><code>function ImageLoaded(_imageLoaded) 
+{
+    Application.LoadedScene = Scenes[&quot;SceneHub&quot;];
+}</code></pre><p><br /></p>
+<p><hr>
+<br /></p>
+<h3 id="createGameObject"> Create a GameObject </a> </h3>
+
+<p> A GameObject represent every element of interaction in your game. A character, a rock, ...</p>
+
+<h6> Duplicate the GameObjects Model </h6>
+
+<p> Go to Assets/Scripts/Javascript/GameObjects/GameObjects.js,  duplicate all the code in a new file which will be your gameObject. <br />
+    Rename the function GameObject to the name of your choice, change <code>this.name</code> to the name of your choice</p>
+
+<h6> Add the GameObject to the Scene </h6>
+
+<p> Go to your Scene file and in the Start function, add your GameObject like this </p>
+
+<pre class="prettyprint source"><code>this.Start = function() 
+{
+    if (!this.started) 
+    {
+        var gameObject = new NameOfYourGameObject();
+        this.GameObjects.push(gameObject);
+    }
+}</code></pre><p> They'll be automatically started in the Update function of the Scene. </p>
+
+<h6> Handle Inputs </h6>
+
+<p> To act with your GameObject, you can use either your keyboard or the mouse.<br /> 
+    In the Update function of your scene, add this : </p>
+
+<pre class="prettyprint source"><code>this.Update = function() 
+{
+    if (!Application.GamePaused) 
+    {
+        if(Input.KeysDown[32])
+        {
+            this.GameObjects[0].Transform.Position.y -= 10;
+        }
+    }
+}</code></pre><p> This code will make your GameObject 'jump'. </p></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AlphaMaskStruct.html">AlphaMaskStruct</a></li><li><a href="Camera.html">Camera</a></li><li><a href="Emitter.html">Emitter</a></li><li><a href="Field.html">Field</a></li><li><a href="Grid.html">Grid</a></li><li><a href="Group.html">Group</a></li><li><a href="Loader.html">Loader</a></li><li><a href="Particle.html">Particle</a></li><li><a href="ParticlesSystem.html">ParticlesSystem</a></li><li><a href="PathFinding.html">PathFinding</a></li><li><a href="Scene.html">Scene</a></li><li><a href="State.html">State</a></li><li><a href="StateMachine.html">StateMachine</a></li><li><a href="Tools_Physics.Box.html">Box</a></li><li><a href="Tools_Physics.Circle.html">Circle</a></li><li><a href="Transition.html">Transition</a></li><li><a href="Vector.html">Vector</a></li></ul><h3>Namespaces</h3><ul><li><a href="GameObjects_GameObjects.html">GameObjects/GameObjects</a></li><li><a href="GFX_Gfx.html">GFX/Gfx</a></li><li><a href="Tools_Debug.html">Tools/Debug</a></li><li><a href="Tools_Dialogue.html">Tools/Dialogue</a></li><li><a href="Tools_Input.html">Tools/Input</a></li><li><a href="Tools_LocalStorage.html">Tools/LocalStorage</a></li><li><a href="Tools_Log.html">Tools/Log</a></li><li><a href="Tools_Math.html">Tools/Math</a></li><li><a href="Tools_Physics.html">Tools/Physics</a></li><li><a href="Tools_Random.html">Tools/Random</a></li><li><a href="Tools_Time.html">Tools/Time</a></li><li><a href="Tools_Timer.html">Tools/Timer</a></li><li><a href="Tools_Tween.html">Tools/Tween</a></li><li><a href="Tools_Utils.html">Tools/Utils</a></li></ul><h3>Global</h3><ul><li><a href="global.html#canvas">canvas</a></li><li><a href="global.html#ImageLoaded">ImageLoaded</a></li><li><a href="global.html#LoadImages">LoadImages</a></li><li><a href="global.html#Run">Run</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Thu May 19 2016 10:02:52 GMT+0200 (Paris, Madrid (heure d’été))
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

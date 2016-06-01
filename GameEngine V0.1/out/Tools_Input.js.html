@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Tools/Input.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Tools/Input.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Handle Input from Keyboard and Mouse&lt;br />
+ *
+ * - Create an array of pushed keys &lt;br />
+ * - Set variables of mouse position once clicked &lt;br />
+ * - Set a draggable element &lt;br />
+ * @namespace Tools/Input 
+ * 
+ * */
+var Input = 
+{
+	KeysDown: [],
+	KeysDownRepeat: [],
+	MousePosition: new Vector(),
+	mouseClick: false,
+	mouseLongClick: false,
+	mouseReload: 0,
+	mouseDraging: false,
+	MouseDraggedElement: null,
+	
+	/**
+	 * 
+	 * @function KeyDown
+	 * 
+	 * @memberof Tools/Input
+	 * 
+	 * @param {Event} e - The event of a pushed keys -> document.addEventListener('keyDown', function(){}); 
+	 * @return {Array} Input.KeysDown - Array of pushed keys, the keyCode is the index of the keys -> Input.KeysDown[32] = space bar&lt;br />
+	 * If the key is repeated, Input.KeysDownRepeat[keyCode] is set to true.
+	 *  
+	 * @description
+	 * e.preventDefault() -> Prevent the default behavior of keys -> JS basic function.&lt;br />
+	 * e.stopPropagation() -> Stop the scrolling event for mobile -> JS basic function.
+	 * */
+	KeyDown: function(e) 
+	{
+		e.preventDefault();
+		e.stopPropagation();
+		Input.KeysDown[e.keyCode] = true;
+		Input.KeysDownRepeat[e.keyCode] = e.repeat;
+	},
+	/**
+	 * 
+	 * @function KeyUp
+	 * @memberof Tools/Input
+	 * 
+	 * @param {Event} e - The event of a pushed keys -> document.addEventListener('keyUp', function(){}); 
+	 *  
+	 * @description
+	 * Delete the Input from the array Input.KeysDown. 
+	 * */
+	KeyUp: function(e) 
+	{
+		delete Input.KeysDown[e.keyCode];
+		delete Input.KeysDownRepeat[e.keyCode];
+	},
+	/**
+	 * 
+	 * @function MouseDown
+	 * @memberof Tools/Input
+	 * 
+	 * @param {Event} e - The event of a pushed keys -> document.addEventListener('mouseDown', function(){}); 
+	 *  
+	 * @description
+	 * 
+	 * Handle the click, check if it's a simple, a multiple or a long click.
+	 * 
+	 * Set the boolean Input.mouseClick to true &lt;br />
+	 * Set the boolean Input.mouseLongClick to true &lt;br />
+	 * Set the integer Input.mouseReload to '1'
+	 * */
+	MouseDown: function(e) 
+	{
+		Input.mouseClick = true;
+		Input.mouseLongClick = true;
+		Input.mouseReload = 1;		
+	},
+	/**
+	 * 
+	 * @function MouseMove
+	 * @memberof Tools/Input
+	 * 
+	 * @param {Event} e - The event of a pushed keys -> document.addEventListener('mouseMove', function(){}); 
+	 *  
+	 * @description
+	 * 
+	 * Handle the move of the mouse &lt;br />
+	 * 
+	 * - Create Input.MousePosition &lt;br />
+	 * - Input.MousePosition.x = the x position of the mouse at this exact moment.&lt;br /> 
+	 * - Input.MousePosition.y = the y position of the mouse at this exact moment.
+	 * 
+	 * */
+	MouseMove: function(e) 
+	{
+		var Rect = canvas.getBoundingClientRect();
+		Input.MousePosition.x = (e.clientX - Rect.left) / (Rect.right - Rect.left) * canvas.width |0;
+		Input.MousePosition.y = (e.clientY - canvas.offsetTop) / (Rect.bottom - Rect.top) * canvas.height |0;
+	},
+	/**
+	 * 
+	 * @function MouseUp
+	 * @memberof Tools/Input
+	 * 
+	 * @param {Event} e - The event of a pushed keys -> document.addEventListener('mouseUp', function(){}); 
+	 *  
+	 * @description
+	 * 
+	 * Unset every boolean &lt;br />  
+	 * Set Input.mouseReload to 0.
+	 * 
+	 * */
+	MouseUp: function(e) 
+	{
+		Input.mouseClick = false;
+		Input.mouseLongClick = false;
+		Input.mouseReload = 0;
+		Input.mouseDraging = false;
+		Input.MouseDraggedElement = null;
+	}
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AlphaMaskStruct.html">AlphaMaskStruct</a></li><li><a href="Camera.html">Camera</a></li><li><a href="Emitter.html">Emitter</a></li><li><a href="Field.html">Field</a></li><li><a href="Grid.html">Grid</a></li><li><a href="Group.html">Group</a></li><li><a href="Loader.html">Loader</a></li><li><a href="Particle.html">Particle</a></li><li><a href="ParticlesSystem.html">ParticlesSystem</a></li><li><a href="PathFinding.html">PathFinding</a></li><li><a href="Scene.html">Scene</a></li><li><a href="State.html">State</a></li><li><a href="StateMachine.html">StateMachine</a></li><li><a href="Tools_Physics.Box.html">Box</a></li><li><a href="Tools_Physics.Circle.html">Circle</a></li><li><a href="Transition.html">Transition</a></li><li><a href="Vector.html">Vector</a></li></ul><h3>Namespaces</h3><ul><li><a href="GameObjects_GameObjects.html">GameObjects/GameObjects</a></li><li><a href="GFX_Gfx.html">GFX/Gfx</a></li><li><a href="Tools_Debug.html">Tools/Debug</a></li><li><a href="Tools_Dialogue.html">Tools/Dialogue</a></li><li><a href="Tools_Input.html">Tools/Input</a></li><li><a href="Tools_LocalStorage.html">Tools/LocalStorage</a></li><li><a href="Tools_Log.html">Tools/Log</a></li><li><a href="Tools_Math.html">Tools/Math</a></li><li><a href="Tools_Physics.html">Tools/Physics</a></li><li><a href="Tools_Random.html">Tools/Random</a></li><li><a href="Tools_Time.html">Tools/Time</a></li><li><a href="Tools_Timer.html">Tools/Timer</a></li><li><a href="Tools_Tween.html">Tools/Tween</a></li><li><a href="Tools_Utils.html">Tools/Utils</a></li></ul><h3>Global</h3><ul><li><a href="global.html#canvas">canvas</a></li><li><a href="global.html#ImageLoaded">ImageLoaded</a></li><li><a href="global.html#LoadImages">LoadImages</a></li><li><a href="global.html#Run">Run</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Thu May 19 2016 10:02:52 GMT+0200 (Paris, Madrid (heure d’été))
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

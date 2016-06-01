@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Tools/StateMachine.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Tools/StateMachine.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+* The State Machine class manages states and transitions 
+* @class
+*
+**/
+
+
+function StateMachine() 
+{
+	this.States = {};
+	this.Current = null;
+	this.Update = function() 
+	{
+		for (var i = 0; i &lt; this.Current.Transitions.length; i++) {
+			if(this.Current.Transitions[i].Call())
+			{
+				this.Current = this.States[this.Current.Transitions[i].ToState];
+				return;
+			}
+		}
+	}
+	/**
+	* Add a state
+	* @param {State} _state - this is the state
+	**/
+	this.AddState = function(_state)
+	{
+		this.States[_state.name] = _state;
+	}
+}
+
+/**
+* Create a State
+*
+* @class
+* @param {String} _name - The state name
+* @param {Array} _transitions - An array of Transition objects.
+*
+**/
+function State(_name, _transitions) 
+{
+	if (typeof _name != String) PrintErr("StateMachine.js : Type of _name is incorrect. String is required !");
+	if (typeof _transitions != Array) PrintErr("StateMachine.js : Type of _transitions is incorrect. Array is required !")
+	this.name = _name;
+	this.Transitions = _transitions;
+}
+
+/**
+* Make a Transition state
+*
+* @class
+* @param {State} _toState - The goal state
+* @param {Function} _callback - Executed function to make the transition
+*
+**/
+function Transition(_toState, _callback) 
+{
+	this.ToState = _toState;
+	this.Call = _callback;
+}
+
+/* Exemple
+var clear = false,
+	panic = false,
+	calm = false,
+	warn = false;
+
+var panicT = new Transition("red", function() { return panic }),
+	clearT = new Transition("green", function () { return clear }),
+	calmT = new Transition("orange", function () { return calm }),
+	warnT = new Transition("orange", function () { return warn });
+
+var green = new State("green", [panicT, warnT]);
+var red = new State("red", [calmT, clearT]);
+var orange = new State("orange", [panicT, clearT]);
+
+var fsm = new StateMachine();
+	fsm.AddState(green);
+	fsm.AddState(red);
+	fsm.AddState(orange);
+	fsm.Current = green;
+
+console.log(fsm.Current.name);
+panic = true;
+fsm.Update();
+console.log(fsm.Current.name);
+panic = false;
+clear = true;
+fsm.Update();
+console.log(fsm.Current.name);
+warn = true;
+clear = false;
+fsm.Update();
+console.log(fsm.Current.name);
+warn = false;
+panic = true;
+fsm.Update();
+console.log(fsm.Current.name);
+*/</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AlphaMaskStruct.html">AlphaMaskStruct</a></li><li><a href="Camera.html">Camera</a></li><li><a href="Emitter.html">Emitter</a></li><li><a href="Field.html">Field</a></li><li><a href="Grid.html">Grid</a></li><li><a href="Group.html">Group</a></li><li><a href="Loader.html">Loader</a></li><li><a href="Particle.html">Particle</a></li><li><a href="ParticlesSystem.html">ParticlesSystem</a></li><li><a href="PathFinding.html">PathFinding</a></li><li><a href="Scene.html">Scene</a></li><li><a href="State.html">State</a></li><li><a href="StateMachine.html">StateMachine</a></li><li><a href="Tools_Physics.Box.html">Box</a></li><li><a href="Tools_Physics.Circle.html">Circle</a></li><li><a href="Transition.html">Transition</a></li><li><a href="Vector.html">Vector</a></li></ul><h3>Namespaces</h3><ul><li><a href="GameObjects_GameObjects.html">GameObjects/GameObjects</a></li><li><a href="GFX_Gfx.html">GFX/Gfx</a></li><li><a href="Tools_Debug.html">Tools/Debug</a></li><li><a href="Tools_Dialogue.html">Tools/Dialogue</a></li><li><a href="Tools_Input.html">Tools/Input</a></li><li><a href="Tools_LocalStorage.html">Tools/LocalStorage</a></li><li><a href="Tools_Log.html">Tools/Log</a></li><li><a href="Tools_Math.html">Tools/Math</a></li><li><a href="Tools_Physics.html">Tools/Physics</a></li><li><a href="Tools_Random.html">Tools/Random</a></li><li><a href="Tools_Time.html">Tools/Time</a></li><li><a href="Tools_Timer.html">Tools/Timer</a></li><li><a href="Tools_Tween.html">Tools/Tween</a></li><li><a href="Tools_Utils.html">Tools/Utils</a></li></ul><h3>Global</h3><ul><li><a href="global.html#canvas">canvas</a></li><li><a href="global.html#ImageLoaded">ImageLoaded</a></li><li><a href="global.html#LoadImages">LoadImages</a></li><li><a href="global.html#Run">Run</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Thu May 19 2016 10:02:52 GMT+0200 (Paris, Madrid (heure d’été))
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

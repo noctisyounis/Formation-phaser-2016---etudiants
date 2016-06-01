@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Tools/PathFinding.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Tools/PathFinding.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+*
+* Initiate a PathFinding 
+* @class
+* 
+* @param {Grid} _grid - Set Grid for the pathfinding
+*
+**/
+
+function PathFinding(_grid)
+{
+	this.WalkableTiles = [];
+	this.Grid = _grid;
+	this.MapDimension = new Vector( _grid.cases,  _grid.cases);
+	this.MapSize = _grid.cases * _grid.cases;
+	this.Map = _grid.Tiles;
+	this.DistanceAlgo = Math.ManhattanDistance;
+
+/**
+*
+* Check if neighbours is walkable 
+*
+* 
+* @param {Number} _x - Set a Vector position x
+* @param {Number} _y - Set a Vector position y
+*
+* @return {Array} Walkable tile around current tiles 
+**/
+
+	this.Neighbours = function(_x, _y)
+	{
+		if(typeof _x != 'number') PrintErr("Parameter x in PathFinding.Neighbours");
+    	if(typeof _y != 'number') PrintErr("Parameter y in PathFinding.Neighbours");
+		var N = 1;
+		var S = 3;
+		var E = 2;
+		var W = 4;
+		
+		var myN = Physics.TileCollision(this.Map, this.WalkableTiles, this.MapDimension, new Vector(_x,_y), N);
+		var myS = Physics.TileCollision(this.Map, this.WalkableTiles, this.MapDimension, new Vector(_x,_y), S);
+		var myE = Physics.TileCollision(this.Map, this.WalkableTiles, this.MapDimension, new Vector(_x,_y), E);
+		var myW = Physics.TileCollision(this.Map, this.WalkableTiles, this.MapDimension, new Vector(_x,_y), W);
+		var result = [];
+		if (myN)
+		{
+			result.push(new Vector(_x, _y - 1))
+		}
+		if (myS)
+		{
+			result.push(new Vector(_x, _y + 1))
+		}
+		if (myE)
+		{
+			result.push(new Vector(_x + 1, _y))
+		}
+		if (myW)
+		{
+			result.push(new Vector(_x - 1, _y))
+		}
+		return result;
+	};
+/**
+* 
+* Create the Node
+*
+* @param {Object} _parent - This is a checkpoint
+* @param {Vector} _pos - Position x &amp; y of the node
+* @param {Number} _worldWidth - The size of the map in width
+*
+* @return {Node} 
+**/
+
+	this.Node = function(_parent, _pos, _worldWidth)
+	{
+		if(!(_pos instanceof(Vector))) PrintErr("Parameter _pos in InArea");
+		if(!(_box instanceof(Vector))) PrintErr("Parameter _box in InArea");
+		var node =
+		{
+			parent: _parent,
+			value: _pos.x + (_pos.y * _worldWidth),
+			x: _pos.x,
+			y: _pos.y,
+			estimateCost: 0,
+			goal: 0
+		}
+		return node;
+	};
+
+/**
+*
+* Find the right path between the starting point (_startPos) and the arrival (_endPos)  
+*
+* @param {Vector} _startPos - The starting point in vector 
+* @param {Vector} _endPos - The ending point in vector
+*
+* @return {Array} 
+**/
+
+	this.Process = function(_startPos, _endPos)
+	{
+
+		if(!(_startPos instanceof(Vector))) PrintErr("Parameter _startPos in PathFinding.Process");
+		if(!(_endPos instanceof(Vector))) PrintErr("Parameter _endPos in PathFinding.Process");
+
+		var pathStart = this.Node(null, _startPos, this.MapDimension.x);
+		
+		var pathEnd = this.Node(null, _endPos, this.MapDimension.x);
+		var ASTAR = new Array(this.MapSize);
+		var Available = [pathStart];
+		var Forbidden = [];
+		var Result = [];
+		var neighbours;
+		var node;
+		var path;
+		var length, max, min, i, j;
+		while (length = Available.length)
+		{
+			max = this.MapSize;
+			min = -1;
+			for (i = 0; i &lt; length; i++)
+			{
+				if (Available[i].estimateCost &lt; max)
+				{
+					max = Available[i].estimateCost;
+					min = i;
+				}
+			}
+			node = Available.splice(min, 1)[0];
+			if (node.value === pathEnd.value)
+			{
+				path = Forbidden[Forbidden.push(node) - 1];
+				while (path = path.parent)
+				{
+					Result.push(new Vector(path.x, path.y));
+				}
+				ASTAR = Forbidden = Available = [];
+				Result.reverse();
+				
+				this.Grid.BestPath = Result;
+				return Result;
+			} 
+			else
+			{
+				neighbours = this.Neighbours(node.x, node.y);
+				for (i = 0, j = neighbours.length; i &lt; j; i++)
+				{
+					path = this.Node(node, neighbours[i], this.MapDimension.x)
+					if (!ASTAR[path.value])
+					{
+						var nodeVector = new Vector(node.x,node.y);
+						var pathEndVector = new Vector(pathEnd.x,pathEnd.y);
+						path.goal = node.goal + this.DistanceAlgo(neighbours[i], nodeVector);
+						path.estimateCost = node.goal + this.DistanceAlgo(neighbours[i], pathEndVector);
+						Available.push(path);
+						ASTAR[path.value] = true;
+					}
+				}
+				Forbidden.push(node);
+			}
+		}
+	}
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AlphaMaskStruct.html">AlphaMaskStruct</a></li><li><a href="Camera.html">Camera</a></li><li><a href="Emitter.html">Emitter</a></li><li><a href="Field.html">Field</a></li><li><a href="Grid.html">Grid</a></li><li><a href="Group.html">Group</a></li><li><a href="Loader.html">Loader</a></li><li><a href="Particle.html">Particle</a></li><li><a href="ParticlesSystem.html">ParticlesSystem</a></li><li><a href="PathFinding.html">PathFinding</a></li><li><a href="Scene.html">Scene</a></li><li><a href="State.html">State</a></li><li><a href="StateMachine.html">StateMachine</a></li><li><a href="Tools_Physics.Box.html">Box</a></li><li><a href="Tools_Physics.Circle.html">Circle</a></li><li><a href="Transition.html">Transition</a></li><li><a href="Vector.html">Vector</a></li></ul><h3>Namespaces</h3><ul><li><a href="GameObjects_GameObjects.html">GameObjects/GameObjects</a></li><li><a href="GFX_Gfx.html">GFX/Gfx</a></li><li><a href="Tools_Debug.html">Tools/Debug</a></li><li><a href="Tools_Dialogue.html">Tools/Dialogue</a></li><li><a href="Tools_Input.html">Tools/Input</a></li><li><a href="Tools_LocalStorage.html">Tools/LocalStorage</a></li><li><a href="Tools_Log.html">Tools/Log</a></li><li><a href="Tools_Math.html">Tools/Math</a></li><li><a href="Tools_Physics.html">Tools/Physics</a></li><li><a href="Tools_Random.html">Tools/Random</a></li><li><a href="Tools_Time.html">Tools/Time</a></li><li><a href="Tools_Timer.html">Tools/Timer</a></li><li><a href="Tools_Tween.html">Tools/Tween</a></li><li><a href="Tools_Utils.html">Tools/Utils</a></li></ul><h3>Global</h3><ul><li><a href="global.html#canvas">canvas</a></li><li><a href="global.html#ImageLoaded">ImageLoaded</a></li><li><a href="global.html#LoadImages">LoadImages</a></li><li><a href="global.html#Run">Run</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Thu May 19 2016 10:02:52 GMT+0200 (Paris, Madrid (heure d’été))
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
